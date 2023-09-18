@@ -71,6 +71,8 @@ const { Content } = await entry.render()
     <dd>{entry.data.exif.cameraModel}</dd>
     <dt>Lens</dt>
     <dd>{entry.data.exif.lensModel}</dd>
+    <dt>Focal length</dt>
+    <dd>{entry.data.exif.focalLength.replace(" ", "")}</dd>
     <dt>F number</dt>
     <dd>ƒ/{entry.data.exif.fNumber}</dd>
     <dt>Exposure time</dt>

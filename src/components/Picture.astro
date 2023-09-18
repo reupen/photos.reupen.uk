@@ -2,10 +2,11 @@
 import { ImageMetadata } from "astro"
 import { getImage, LocalImageProps, Image } from "astro:assets"
 export interface Props {
+  class: string
   src: ImageMetadata
 }
 
-const { src } = Astro.props
+const { class: class_, src } = Astro.props
 
 const widths = [960 * 2, 960, 600, 300]
 
@@ -14,6 +15,10 @@ async function generateImages(format: Parameters<getImage>[0]["format"]) {
     widths.map((width) => getImage({ src, width, format })),
   )
 
+  return images
+}
+
+function makeSrcset(images: Awaited<ReturnValue<getImage>>[]) {
   return images.map((image) => `${image.src} ${image.options.width}w`).join(",")
 }
 
@@ -27,8 +32,8 @@ const webpImages = await generateImages("webp")
   }
 </style>
 
-<picture class="picture">
-  <source srcset={avifImages} type="image/avif" />
-  <source srcset={webpImages} type="image/webp" />
+<picture class:list={["picture", class_]}>
+  <source srcset={makeSrcset(avifImages)} type="image/avif" />
+  <source srcset={makeSrcset(webpImages)} type="image/webp" />
   <img src={webpImages[0].src} alt="TODO" />
 </picture>

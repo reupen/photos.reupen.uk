@@ -10,6 +10,12 @@ const images = (await getCollection("images")).sort(
 )
 ---
 
+<style>
+  .home-picture :global(img) {
+    margin-bottom: 1.25rem;
+  }
+</style>
+
 <Layout title="Reupen’s photos">
   <p>Here’s a selection of photos I’ve taken over the years.</p>
   {
@@ -26,7 +32,7 @@ const images = (await getCollection("images")).sort(
             format(image.data.exif.date, "MMMM yyyy")}
         </h2>
         <a href={"/images/" + image.slug}>
-          <Picture src={image.data.src} />
+          <Picture class="home-picture" src={image.data.src} />
         </a>
       </div>
     ))
