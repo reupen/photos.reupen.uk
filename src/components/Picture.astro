@@ -8,14 +8,15 @@ export interface Props {
 
 const { class: class_, src } = Astro.props
 
-const widths = [960 * 2, 960, 600, 300]
+const widths = [
+  src.width,
+  ...[960 * 2, 960, 600, 300].filter((width) => width < src.width),
+]
 
 async function generateImages(format: Parameters<getImage>[0]["format"]) {
-  const images = await Promise.all(
-    widths.map((width) => getImage({ src, width, format })),
+  return Promise.all(
+    widths.map((width) => getImage({ src, width, format, quality: 95 })),
   )
-
-  return images
 }
 
 function makeSrcset(images: Awaited<ReturnValue<getImage>>[]) {

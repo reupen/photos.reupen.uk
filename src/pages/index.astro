@@ -16,7 +16,8 @@ const images = (await getCollection("images")).sort(
   }
 </style>
 
-<Layout title="Reupen’s photos">
+<Layout>
+  <h1>Reupen’s photos</h1>
   <p>Here’s a selection of photos I’ve taken over the years.</p>
   {
     images.map((image, index) => (

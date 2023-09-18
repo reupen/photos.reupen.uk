@@ -17,7 +17,7 @@ const computedTitle =
   title && title !== siteTitle ? `${title} – ${siteTitle}` : siteTitle
 ---
 
-<html lang="en" class={fullWidth ? "full-size" : undefined}>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -34,10 +34,9 @@ const computedTitle =
     <meta name="twitter:title" content={computedTitle} />
     <meta name="twitter:description" content={computedDescription} />
   </head>
-  <body class={fullWidth ? "full-size" : undefined}>
+  <body>
     <div class={fullWidth ? "container-wide" : "container"}>
-      <main class={fullWidth ? "flex full-size" : undefined}>
-        {title && <h1>{title}</h1>}
+      <main>
         <slot />
       </main>
     </div>
@@ -52,7 +51,7 @@ const computedTitle =
   }
 
   :global(body) {
-    margin: 0;
+    margin: 1.5rem;
   }
 
   :global(html) {
@@ -85,10 +84,6 @@ const computedTitle =
     width: calc(100% - 2rem);
     margin: 0 auto;
     padding-bottom: 1rem;
-  }
-
-  .full-size {
-    height: 100%;
   }
 
   .flex {
