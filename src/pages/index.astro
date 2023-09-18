@@ -1,0 +1,39 @@
+---
+import Layout from "../layouts/Layout.astro"
+import { format, isSameMonth } from "date-fns"
+
+import { getCollection } from "astro:content"
+import Picture from "../components/Picture.astro"
+
+const images = (await getCollection("images")).sort(
+  (left, right) => right.data.exif.date - left.data.exif.date,
+)
+---
+
+<Layout title="Reupen’s photos">
+  <p>Here’s a selection of photos I’ve taken over the years.</p>
+  {
+    images.map((image, index) => (
+      <div>
+        <h2>
+          {image.data.exif.date &&
+            (!images[index - 1]?.data.exif.date ||
+              !image.data.exif.date ||
+              !isSameMonth(
+                images[index - 1].data.exif.date,
+                image.data.exif.date,
+              )) &&
+            format(image.data.exif.date, "MMMM yyyy")}
+        </h2>
+        <a href={"/images/" + image.slug}>
+          <Picture src={image.data.src} />
+        </a>
+      </div>
+    ))
+  }
+  <p>
+    This website was built using{" "}
+    <a href="https://astro.build">Astro</a> and is{" "}
+    <a href="https://github.com/reupen/yuo.be">open source</a>.
+  </p>
+</Layout>

@@ -1,0 +1,34 @@
+---
+import { ImageMetadata } from "astro"
+import { getImage, LocalImageProps, Image } from "astro:assets"
+export interface Props {
+  src: ImageMetadata
+}
+
+const { src } = Astro.props
+
+const widths = [960 * 2, 960, 600, 300]
+
+async function generateImages(format: Parameters<getImage>[0]["format"]) {
+  const images = await Promise.all(
+    widths.map((width) => getImage({ src, width, format })),
+  )
+
+  return images.map((image) => `${image.src} ${image.options.width}w`).join(",")
+}
+
+const avifImages = await generateImages("avif")
+const webpImages = await generateImages("webp")
+---
+
+<style>
+  .picture img {
+    width: 100%;
+  }
+</style>
+
+<picture class="picture">
+  <source srcset={avifImages} type="image/avif" />
+  <source srcset={webpImages} type="image/webp" />
+  <img src={webpImages[0].src} alt="TODO" />
+</picture>

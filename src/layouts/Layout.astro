@@ -1,0 +1,84 @@
+---
+import "@fontsource/inter"
+
+export interface Props {
+  title: string
+  description: string
+  fullWidth?: boolean
+}
+
+const siteTitle = "Reupen’s photos"
+const siteDescription = "Photos I’ve taken"
+const siteAuthor = "Reupen Shah"
+const { title, description, fullWidth } = Astro.props
+
+const computedDescription = description || siteDescription
+const computedTitle =
+  title && title !== siteTitle ? `${title} – ${siteTitle}` : siteTitle
+---
+
+<html lang="en" class={fullWidth ? "full-size" : undefined}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{computedTitle}</title>
+    <meta name="description" content={computedDescription} />
+    <meta name="og:title" content={computedTitle} />
+    <meta name="og:site_name" content={siteTitle} />
+    <meta name="og:description" content={computedDescription} />
+    <meta name="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:creator" content={siteAuthor} />
+    <meta name="twitter:title" content={computedTitle} />
+    <meta name="twitter:description" content={computedDescription} />
+  </head>
+  <body class={fullWidth ? "full-size" : undefined}>
+    <div class={fullWidth ? "container-wide" : "container"}>
+      <main class={fullWidth ? "flex full-size" : undefined}>
+        {title && <h1>{title}</h1>}
+        <slot />
+      </main>
+    </div>
+  </body>
+</html>
+
+<style>
+  *,
+  *:after,
+  *:before {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  html {
+    background: #000;
+    color: #fff;
+    font-family: Inter, system-ui, sans-serif;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .container-wide {
+    height: 100%;
+    width: calc(100% - 2rem);
+    margin: 0 auto;
+    padding-bottom: 1rem;
+  }
+
+  .full-size {
+    height: 100%;
+  }
+
+  .flex {
+    display: flex;
+    flex-flow: column;
+  }
+</style>
