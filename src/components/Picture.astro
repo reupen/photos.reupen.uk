@@ -1,5 +1,5 @@
 ---
-import { ImageMetadata } from "astro"
+import { GetImageResult, ImageMetadata, ImageTransform } from "astro"
 import { getImage, LocalImageProps, Image } from "astro:assets"
 export interface Props {
   class: string
@@ -13,9 +13,28 @@ const widths = [
   ...[960 * 2, 960, 600, 300].filter((width) => width < src.width),
 ]
 
+async function safeGetImage(
+  options: ImageTransform & { src: ImageMetadata },
+): Promise<GetImageResult> {
+  const { src, width, format } = options
+
+  if (src.format === format && src.width === width) {
+    return {
+      options: {
+        format: src.format,
+        width: src.width,
+        height: src.height,
+      },
+      src: src.src,
+    }
+  }
+
+  return getImage(options)
+}
+
 async function generateImages(format: Parameters<getImage>[0]["format"]) {
   return Promise.all(
-    widths.map((width) => getImage({ src, width, format, quality: 95 })),
+    widths.map((width) => safeGetImage({ src, width, format, quality: 95 })),
   )
 }
 
