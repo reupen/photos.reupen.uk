@@ -15,6 +15,7 @@ const imageCollection = defineCollection({
       },
       z.object({
         title: z.string(),
+        // location: z.string().optional(),
         exif: z.string().transform(async (val) => {
           const exif = await exiftool.read(join("src/content/images", val))
           return {

@@ -1,20 +1,21 @@
 ---
-import { getImage, LocalImageProps, Image } from "astro:assets"
 import { CollectionEntry, getCollection } from "astro:content"
+import { format } from "date-fns"
 
 import Layout from "../../layouts/Layout.astro"
-import { format } from "date-fns"
 import Picture from "../../components/Picture.astro"
+import { getImages } from "../../utils/getImages"
 
 export async function getStaticPaths() {
-  const images = await getCollection("images")
-  return images.map((entry) => ({
+  const images = await getImages()
+  return (await getImages()).map((entry, index) => ({
     params: { slug: entry.slug },
-    props: { entry },
+    props: { entry, index },
   }))
 }
 
-const { entry }: { entry: CollectionEntry<"images"> } = Astro.props
+const images = await getImages()
+const { entry, index }: { entry: CollectionEntry<"images"> } = Astro.props
 const { Content } = await entry.render()
 ---
 
@@ -89,5 +90,11 @@ const { Content } = await entry.render()
       <dd><span aria-hidden="true">ISO</span>{" "}{entry.data.exif.iso}</dd>
     </dl>
     <Content />
+    {index > 0 && <a href={`/image/${images[index - 1].slug}`}>Previous</a>}
+    {
+      index + 1 < images.length && (
+        <a href={`/image/${images[index + 1].slug}`}>Next</a>
+      )
+    }
   </div>
 </Layout>
