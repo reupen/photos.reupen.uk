@@ -21,7 +21,7 @@ const { page } = Astro.props
   .pagination {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    font-size: 20px;;
+    font-size: 20px;
 
     & a {
       & span {
@@ -38,16 +38,17 @@ const { page } = Astro.props
         }
       }
     }
+  }
 
   .next {
     justify-self: right;
   }
 </style>
 
-<Layout title={page.currentPage > 0 ? `Page ${page.currentPage}` : undefined}>
-  <h1>Reupen’s photos{page.currentPage > 0 && (
-      <> – page {page.currentPage}</>
-  )}</h1>
+<Layout title={page.currentPage > 1 ? `Page ${page.currentPage}` : undefined}>
+  <h1>
+    Reupen’s photos{page.currentPage > 1 && <> – page {page.currentPage}</>}
+  </h1>
   <p>Here’s a selection of photos I’ve taken over the years.</p>
   {
     page.data.map((image, index) => (
