@@ -2,11 +2,12 @@
 import { GetImageResult, ImageMetadata, ImageTransform } from "astro"
 import { getImage, LocalImageProps, Image } from "astro:assets"
 export interface Props {
+  id?: string
   class: string
   src: ImageMetadata
 }
 
-const { class: class_, src } = Astro.props
+const { class: class_, id, src } = Astro.props
 
 const widths = [
   src.width,
@@ -52,7 +53,7 @@ const webpImages = await generateImages("webp")
   }
 </style>
 
-<picture class:list={["picture", class_]}>
+<picture class:list={["picture", class_]} id={id}>
   <source srcset={makeSrcset(avifImages)} type="image/avif" />
   <source srcset={makeSrcset(webpImages)} type="image/webp" />
   <img src={webpImages[0].src} alt="TODO" />

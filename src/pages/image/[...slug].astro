@@ -29,10 +29,28 @@ const { Content } = await entry.render()
   .standalone-picture,
   .standalone-picture :global(img) {
     height: fit-content;
-    max-height: 85vh;
+    max-height: 43vw;
     max-width: 100%;
     object-fit: scale-down;
     margin-bottom: 1rem;
+  }
+
+  .standalone-fullscreen-picture {
+    &,
+    :global(img) {
+      height: 0;
+      width: 0;
+    }
+  }
+
+  .standalone-fullscreen-picture:fullscreen,
+  .standalone-fullscreen-picture:fullscreen :global(img) {
+    height: fit-content;
+    width: auto;
+    object-fit: scale-down;
+    max-height: 100vh;
+    max-width: 100vw;
+    margin: 0 auto;
   }
 
   .details {
@@ -45,12 +63,24 @@ const { Content } = await entry.render()
     flex: 1;
   }
 
+  #fullscreen-link {
+    display: block;
+    margin-top: 0.85rem;
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
   .nav {
     display: flex;
     column-gap: 1rem;
     font-size: 20px;
 
     & a {
+      display: flex;
+      align-items: center;
+
       & span {
         display: flex;
         align-items: center;
@@ -74,16 +104,6 @@ const { Content } = await entry.render()
     margin: 0.5rem auto 0;
   }
 
-  dt {
-    clip: rect(0 0 0 0);
-    clip-path: inset(50%);
-    height: 1px;
-    overflow: hidden;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
-  }
-
   dt,
   dd {
     display: inline;
@@ -93,7 +113,7 @@ const { Content } = await entry.render()
     margin-left: 0;
   }
 
-  p {
+  .title {
     font-size: 20px;
     margin: 0 0 0.85rem;
   }
@@ -101,35 +121,50 @@ const { Content } = await entry.render()
 
 <Layout title={entry.data.title} fullWidth>
   <div class="wrapper">
-    <a href={entry.data.src.src}>
-      <Picture class="standalone-picture" src={entry.data.src} alt={"TODO"} />
+    <Picture
+      id="fullscreen-picture"
+      class="standalone-fullscreen-picture"
+      src={entry.data.src}
+      alt={entry.data.title}
+    />
+    <a href={entry.data.src.src} id="picture-link">
+      <Picture
+        class="standalone-picture"
+        src={entry.data.src}
+        alt={entry.data.title}
+      />
     </a>
     <div class="details">
       <div class="details-left">
-        <p>
+        <div class="title">
           {format(entry.data.exif.date, "d MMMM yyyy")} • {entry.data.title}
-        </p>
+        </div>
         <dl>
-          <dt>Camera</dt>
-          <dd>{entry.data.exif.cameraModel}</dd>
-          <dt>Lens</dt>
-          <dd>{entry.data.exif.lensModel}</dd>
-          <dt>Focal length</dt>
-          <dd>{entry.data.exif.focalLength.replace(" ", "")}</dd>
-          <dt>F number</dt>
-          <dd>ƒ/{entry.data.exif.fNumber}</dd>
-          <dt>Exposure time</dt>
-          <dd>{entry.data.exif.exposureTime}s</dd>
-          <dt>ISO</dt>
+          <dt class="visually-hidden">Camera</dt>
+          <dd title="Camera">{entry.data.exif.cameraModel}</dd>
+          <dt class="visually-hidden">Lens</dt>
+          <dd title="Lens">{entry.data.exif.lensModel}</dd>
+          <dt class="visually-hidden">Focal length</dt>
+          <dd title="Focal length">
+            {entry.data.exif.focalLength.replace(" ", "")}
+          </dd>
+          <dt class="visually-hidden">f-number</dt>
+          <dd title="f-number">ƒ/{entry.data.exif.fNumber}</dd>
+          <dt class="visually-hidden">Exposure time</dt>
+          <dd title="Exposure time">{entry.data.exif.exposureTime}s</dd>
+          <dt class="visually-hidden">ISO</dt>
           <dd><span aria-hidden="true">ISO</span>{" "}{entry.data.exif.iso}</dd>
         </dl>
         <Content />
+        <a id="fullscreen-link" class="control" hidden="hidden">
+          <span>View fullscreen</span>
+        </a>
       </div>
       <div class="details-nav">
         <div class="nav">
           {
             index > 0 && (
-              <a href={`/image/${images[index - 1].slug}`}>
+              <a href={`/image/${images[index - 1].slug}`} id="previous-link">
                 <span>
                   <i class="fa-solid fa-chevron-left" />
                   &nbsp;<span class="nav-link-text">Previous</span>
@@ -139,7 +174,7 @@ const { Content } = await entry.render()
           }
           {
             index + 1 < images.length && (
-              <a href={`/image/${images[index + 1].slug}`}>
+              <a href={`/image/${images[index + 1].slug}`} id="next-link">
                 <span>
                   <span class="nav-link-text">Next</span>&nbsp;
                   <i class="fa-solid fa-chevron-right" />
@@ -152,3 +187,19 @@ const { Content } = await entry.render()
     </div>
   </div>
 </Layout>
+
+<script>
+  const fullScreenButton = document.getElementById("fullscreen-link")
+  fullScreenButton.removeAttribute("hidden")
+  fullScreenButton.addEventListener("click", () => {
+    document.getElementById("fullscreen-picture").requestFullscreen()
+  })
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowLeft") {
+      document.getElementById("previous-link").click()
+    } else if (event.key === "ArrowRight") {
+      document.getElementById("next-link").click()
+    }
+  })
+</script>
