@@ -16,14 +16,21 @@ const imageCollection = defineCollection({
       z.object({
         title: z.string(),
         // location: z.string().optional(),
-        exif: z.string().transform(async (val) => {
+        exif: z.string().transform(async (val, ctx) => {
           const exif = await exiftool.read(join("src/content/images", val))
+
+          if (!(exif.DateTimeOriginal instanceof ExifDateTime)) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: `Missing date.`,
+            })
+
+            return z.NEVER
+          }
+
           return {
             cameraModel: exif.Model,
-            date:
-              exif.DateTimeOriginal instanceof ExifDateTime
-                ? exif.DateTimeOriginal.toDate()
-                : null,
+            date: exif.DateTimeOriginal.toDate(),
             exposureTime: exif.ExposureTime,
             lensModel: exif.LensModel,
             iso: exif.ISO,

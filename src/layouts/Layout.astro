@@ -1,5 +1,6 @@
 ---
 import "@fontsource/inter"
+import "./font-awesome.scss"
 
 export interface Props {
   title: string
@@ -74,9 +75,17 @@ const computedTitle =
     margin: 2.5rem 0 1rem;
   }
 
-  :global(a),
-  :global(a):visited {
-    color: #fb660a;
+  :global(a) {
+    text-decoration: none;
+
+    &,
+    :visited {
+      color: #fb660a;
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   .container {

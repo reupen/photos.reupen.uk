@@ -35,6 +35,38 @@ const { Content } = await entry.render()
     margin-bottom: 1rem;
   }
 
+  .details {
+    display: flex;
+    max-width: 1415px;
+    margin: 0 auto;
+  }
+
+  .details-left {
+    flex: 1;
+  }
+
+  .nav {
+    display: flex;
+    column-gap: 1rem;
+    font-size: 20px;
+
+    & a {
+      & span {
+        display: flex;
+        align-items: center;
+      }
+
+      &:hover {
+        text-decoration: none;
+
+        .nav-link-text {
+          text-decoration: underline;
+          text-underline-offset: 4px;
+        }
+      }
+    }
+  }
+
   dl {
     display: flex;
     flex-wrap: wrap;
@@ -63,7 +95,7 @@ const { Content } = await entry.render()
 
   p {
     font-size: 20px;
-    margin: 0.85rem 0;
+    margin: 0 0 0.85rem;
   }
 </style>
 
@@ -72,29 +104,51 @@ const { Content } = await entry.render()
     <a href={entry.data.src.src}>
       <Picture class="standalone-picture" src={entry.data.src} alt={"TODO"} />
     </a>
-    <p>
-      {format(entry.data.exif.date, "d MMMM yyyy")} • {entry.data.title}
-    </p>
-    <dl>
-      <dt>Camera</dt>
-      <dd>{entry.data.exif.cameraModel}</dd>
-      <dt>Lens</dt>
-      <dd>{entry.data.exif.lensModel}</dd>
-      <dt>Focal length</dt>
-      <dd>{entry.data.exif.focalLength.replace(" ", "")}</dd>
-      <dt>F number</dt>
-      <dd>ƒ/{entry.data.exif.fNumber}</dd>
-      <dt>Exposure time</dt>
-      <dd>{entry.data.exif.exposureTime}s</dd>
-      <dt>ISO</dt>
-      <dd><span aria-hidden="true">ISO</span>{" "}{entry.data.exif.iso}</dd>
-    </dl>
-    <Content />
-    {index > 0 && <a href={`/image/${images[index - 1].slug}`}>Previous</a>}
-    {
-      index + 1 < images.length && (
-        <a href={`/image/${images[index + 1].slug}`}>Next</a>
-      )
-    }
+    <div class="details">
+      <div class="details-left">
+        <p>
+          {format(entry.data.exif.date, "d MMMM yyyy")} • {entry.data.title}
+        </p>
+        <dl>
+          <dt>Camera</dt>
+          <dd>{entry.data.exif.cameraModel}</dd>
+          <dt>Lens</dt>
+          <dd>{entry.data.exif.lensModel}</dd>
+          <dt>Focal length</dt>
+          <dd>{entry.data.exif.focalLength.replace(" ", "")}</dd>
+          <dt>F number</dt>
+          <dd>ƒ/{entry.data.exif.fNumber}</dd>
+          <dt>Exposure time</dt>
+          <dd>{entry.data.exif.exposureTime}s</dd>
+          <dt>ISO</dt>
+          <dd><span aria-hidden="true">ISO</span>{" "}{entry.data.exif.iso}</dd>
+        </dl>
+        <Content />
+      </div>
+      <div class="details-nav">
+        <div class="nav">
+          {
+            index > 0 && (
+              <a href={`/image/${images[index - 1].slug}`}>
+                <span>
+                  <i class="fa-solid fa-chevron-left" />
+                  &nbsp;<span class="nav-link-text">Previous</span>
+                </span>
+              </a>
+            )
+          }
+          {
+            index + 1 < images.length && (
+              <a href={`/image/${images[index + 1].slug}`}>
+                <span>
+                  <span class="nav-link-text">Next</span>&nbsp;
+                  <i class="fa-solid fa-chevron-right" />
+                </span>
+              </a>
+            )
+          }
+        </div>
+      </div>
+    </div>
   </div>
 </Layout>

@@ -1,9 +1,18 @@
 import { getCollection } from "astro:content"
+import { compareDesc, isSameMonth } from "date-fns"
 
 export async function getImages() {
-  return (await getCollection("images")).sort(
-    (left, right) =>
-      (right.data.exif.date?.valueOf() ?? 0) -
-      (left.data.exif.date?.valueOf() ?? 0),
+  const sortedImages = (await getCollection("images")).sort((left, right) =>
+    compareDesc(left.data.exif.date, right.data.exif.date),
   )
+
+  return sortedImages.map((image, index) => ({
+    ...image,
+    isNewMonth:
+      index === 0 ||
+      !isSameMonth(
+        sortedImages[index - 1].data.exif.date,
+        image.data.exif.date,
+      ),
+  }))
 }
