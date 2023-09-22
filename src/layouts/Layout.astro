@@ -42,75 +42,78 @@ const computedTitle =
         <slot />
       </main>
     </div>
-    <style>
-      :global(*),
-      :global(*):after,
-      :global(*):before {
-        box-sizing: border-box;
-      }
-
-      :global(body) {
-        margin: 1.5rem;
-      }
-
-      :global(html) {
-        background: #000;
-        color: #fff;
-        font-family: Inter, system-ui, sans-serif;
-      }
-
-      :global(img) {
-        display: block;
-      }
-
-      :global(h1) {
-        font-size: 42px;
-        margin: 2rem 0 1.5rem;
-      }
-
-      :global(h2) {
-        font-size: 32px;
-        margin: 2.5rem 0 1rem;
-      }
-
-      :global(a) {
-        text-decoration: none;
-
-        &,
-        :visited {
-          color: #fb660a;
-        }
-
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-
-      :global(.visually-hidden) {
-        clip: rect(0 0 0 0);
-        clip-path: inset(50%);
-        height: 1px;
-        overflow: hidden;
-        position: absolute;
-        white-space: nowrap;
-        width: 1px;
-      }
-
-      .container {
-        max-width: 960px;
-        margin: 0 auto;
-      }
-
-      .container-wide {
-        height: 100%;
-        width: calc(100% - 2rem);
-        margin: 0 auto;
-      }
-
-      .flex {
-        display: flex;
-        flex-flow: column;
-      }
-    </style>
   </body>
 </html>
+
+<style>
+  :global(*),
+  :global(*):after,
+  :global(*):before {
+    box-sizing: border-box;
+  }
+
+  :global(body) {
+    margin: 1.5rem;
+  }
+
+  :global(html) {
+    background: #000;
+    color: #fff;
+    font-family: Inter, system-ui, sans-serif;
+  }
+
+  :global(img) {
+    display: block;
+  }
+
+  :global(h1) {
+    font-size: 42px;
+    margin: 2rem 0 1.5rem;
+  }
+
+  :global(h2) {
+    font-size: 32px;
+    margin: 2.5rem 0 1rem;
+  }
+
+  :global(a) {
+    text-decoration: none;
+
+    &,
+    :visited {
+      color: #fb660a;
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  :global(p) {
+    line-height: 1.4;
+  }
+
+  :global(.visually-hidden) {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .container-wide {
+    margin: 0 auto;
+  }
+
+  .flex {
+    display: flex;
+    flex-flow: column;
+  }
+</style>

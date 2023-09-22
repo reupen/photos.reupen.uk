@@ -37,6 +37,7 @@
     "cssnano": "^6.0.1",
     "husky": "^8.0.3",
     "lint-staged": "^14.0.1",
+    "postcss-custom-media": "^10.0.1",
     "postcss-preset-env": "^9.1.4",
     "prettier": "^3.0.0",
     "prettier-plugin-astro": "^0.12.0",

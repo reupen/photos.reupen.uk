@@ -11,46 +11,15 @@ export async function getStaticPaths({ paginate }) {
 }
 
 const { page } = Astro.props
+const isFirstPage = page.currentPage === 1
 ---
 
-<style>
-  .home-picture :global(img) {
-    margin-bottom: 1.25rem;
-  }
-
-  .pagination {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    font-size: 20px;
-
-    & a {
-      & span {
-        display: flex;
-        align-items: center;
-      }
-
-      &:hover {
-        text-decoration: none;
-
-        .nav-link-text {
-          text-decoration: underline;
-          text-underline-offset: 4px;
-        }
-      }
-    }
-  }
-
-  .next {
-    justify-self: right;
-  }
-</style>
-
-<Layout title={page.currentPage > 1 ? `Page ${page.currentPage}` : undefined}>
+<Layout title={!isFirstPage ? `Page ${page.currentPage}` : undefined}>
   <h1>
-    Reupen’s photos{page.currentPage > 1 && <> – page {page.currentPage}</>}
+    Reupen’s photos{!isFirstPage && <> – page {page.currentPage}</>}
   </h1>
   {
-    page.currentPage === 1 && (
+    isFirstPage && (
       <p>
         Here’s a selection of photos I’ve taken over the years.{" "}
         <a href="https://astro.build">More about the site.</a>
@@ -58,12 +27,12 @@ const { page } = Astro.props
     )
   }
   {
-    page.data.map((image, index) => (
+    page.data.map((image, imageIndex) => (
       <div>
-        {(image.isNewMonth || index === 0) && (
+        {(image.isNewMonth || imageIndex === 0) && (
           <h2>
             {format(image.data.exif.date, "MMMM yyyy")}
-            {index === 0 && !image.isNewMonth && " (continued)"}
+            {imageIndex === 0 && !image.isNewMonth && " (continued)"}
           </h2>
         )}
         <a id={image.slug} href={`/image/${image.slug}`}>
@@ -103,7 +72,36 @@ const { page } = Astro.props
       }
     </div>
   </div>
-  <script is:inline>
-    window._photosReupenUKVisitedHome = true
-  </script>
 </Layout>
+
+<style>
+  .home-picture :global(img) {
+    margin-bottom: 1.25rem;
+  }
+
+  .pagination {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    font-size: 20px;
+
+    & a {
+      & span {
+        display: flex;
+        align-items: center;
+      }
+
+      &:hover {
+        text-decoration: none;
+
+        .nav-link-text {
+          text-decoration: underline;
+          text-underline-offset: 4px;
+        }
+      }
+    }
+  }
+
+  .next {
+    justify-self: right;
+  }
+</style>
