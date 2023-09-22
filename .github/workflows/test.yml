@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-docs:
-    name: Build docs
+  build-site:
+    name: Build site
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.get-version.outputs.version }}
@@ -15,7 +15,7 @@ jobs:
       - name: Git clone repository
         uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v3
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -28,10 +28,10 @@ jobs:
           npm run build
           tar -czvf /tmp/site.tar.gz dist/
 
-      - name: Upload docs artefact
+      - name: Upload artefact
         uses: actions/upload-artifact@v3
         with:
-          name: docs
+          name: site
           path: /tmp/site.tar.gz
           retention-days: 1
 
@@ -53,7 +53,7 @@ jobs:
     name: Run e2e tests
     runs-on: ubuntu-latest
     needs:
-      - build-docs
+      - build-site
       - get-playwright-version
     container:
       image: mcr.microsoft.com/playwright:v${{ needs.get-playwright-version.outputs.version }}-jammy
@@ -68,16 +68,16 @@ jobs:
           cache: npm
 
       - name: Install Node.js dependencies
-        run: npm install
+        run: npm ci
 
       - name: Download built docs
         uses: actions/download-artifact@v3
         with:
-          name: docs
+          name: site
           path: /tmp
 
       - name: Unpack docs
-        run: tar -xzf /tmp/docs.tar.gz
+        run: tar -xzf /tmp/site.tar.gz
 
       - name: Run e2e tests
         run: npm exec --no -- playwright test
