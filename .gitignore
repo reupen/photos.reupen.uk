@@ -133,3 +133,4 @@ dist
 
 .vercel/
 .astro/
+/test/e2e/output/

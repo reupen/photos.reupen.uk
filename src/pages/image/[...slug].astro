@@ -8,7 +8,6 @@ import { getImages } from "../../utils/getImages"
 import Pagination from "../../components/Pagination.astro"
 
 export async function getStaticPaths() {
-  const images = await getImages()
   return (await getImages()).map((entry, index) => ({
     params: { slug: entry.slug },
     props: { entry, index },
@@ -16,6 +15,7 @@ export async function getStaticPaths() {
 }
 
 const images = await getImages()
+
 const { entry, index }: { entry: CollectionEntry<"images"> } = Astro.props
 const { Content } = await entry.render()
 

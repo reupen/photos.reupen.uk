@@ -1,23 +1,25 @@
 {
-  "name": "yuo-be",
+  "name": "photos.reupen.uk",
   "private": true,
-  "description": "yuo.be website",
+  "description": "photos.reupen.uk website",
   "version": "1.0.0",
   "author": "Reupen Shah",
   "type": "module",
-  "license": "0BSD",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/reupen/yuo.be"
   },
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build && npm run purgecss",
-    "preview": "astro preview",
     "astro": "astro",
-    "purgecss": "purgecss --content 'dist/**/*.html' --css 'dist/assets/*.css' -o 'dist/assets'",
-    "prepare": "husky install"
+    "build": "astro build",
+    "dev": "astro dev",
+    "format:check": "prettier -c .",
+    "prepare": "husky install",
+    "preview": "astro preview",
+    "start": "astro dev",
+    "test": "python scripts/run_e2e_tests.py",
+    "test:update": "python scripts/run_e2e_tests_update_snapshots.py"
   },
   "dependencies": {
     "@astrojs/check": "^0.2.0",
@@ -25,14 +27,13 @@
     "@fortawesome/fontawesome-free": "^6.4.0",
     "astro": "^3.1.0",
     "astro-compress": "^2.0.15",
-    "bulma": "^0.9.4",
     "date-fns": "^2.30.0",
     "exiftool-vendored": "^23.0.0",
-    "purgecss": "^5.0.0",
     "sass": "^1.64.1",
     "typescript": "^5.2.2"
   },
   "devDependencies": {
+    "@playwright/test": "^1.38.1",
     "@types/node": "^18.17.0",
     "cssnano": "^6.0.1",
     "husky": "^8.0.3",

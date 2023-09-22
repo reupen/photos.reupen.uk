@@ -2,13 +2,13 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
-   sodipodi:docname="favicon.svg"
-   id="SVGRoot"
-   version="1.1"
-   viewBox="0 0 256.0 256.0"
-   height="256.0px"
    width="256.0px"
+   height="256.0px"
+   viewBox="0 0 256.0 256.0"
+   version="1.1"
+   id="SVGRoot"
+   sodipodi:docname="favicon.svg"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -23,9 +23,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="px"
      showgrid="true"
-     inkscape:zoom="2.6308798"
-     inkscape:cx="-51.123582"
-     inkscape:cy="20.905554"
+     inkscape:zoom="2.4656884"
+     inkscape:cx="178.44915"
+     inkscape:cy="200.95808"
      inkscape:window-width="3840"
      inkscape:window-height="2068"
      inkscape:window-x="-12"
@@ -36,7 +36,13 @@
      inkscape:deskcolor="#d1d1d1">
     <inkscape:grid
        type="xygrid"
-       id="grid20" />
+       id="grid20"
+       originx="0"
+       originy="0"
+       spacingy="1"
+       spacingx="1"
+       units="px"
+       visible="true" />
   </sodipodi:namedview>
   <defs
      id="defs9">
@@ -56,23 +62,23 @@
      inkscape:groupmode="layer"
      id="layer1">
     <circle
-       style="display:inline;fill:#ffffff;fill-opacity:1"
+       style="display:inline;fill:#000000;fill-opacity:1"
        id="path69"
        r="128"
        cy="128"
        cx="128" />
     <circle
-       style="display:inline;fill:none;fill-opacity:1;stroke:#000000;stroke-width:20;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.25"
+       style="display:inline;fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:20;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.55"
        id="circle1613"
        cx="128"
        cy="128"
        r="128"
-       clip-path="url(#clipPath1867)"
-       inkscape:label="circle1613" />
+       clip-path="url(#clipPath1867)" />
     <path
-       d="m 1354,4093 c 4,-10 232,-584 508,-1276 l 501,-1258 -78,-197 c -101,-255 -136,-322 -214,-404 -71,-76 -163,-129 -258,-149 -69,-14 -224,-7 -300,15 l -53,14 V 605 371 l 58,-12 c 33,-8 126,-13 222,-13 186,-1 270,16 406,78 227,105 429,326 578,630 43,87 1196,3029 1196,3051 0,3 -130,5 -289,5 h -289 l -15,-42 c -218,-623 -639,-1863 -652,-1920 -10,-43 -22,-78 -26,-78 -3,0 -16,39 -28,88 -12,48 -160,507 -328,1020 l -307,932 h -319 c -300,0 -319,-1 -313,-17 z"
-       id="path69-1"
-       transform="matrix(0.04083428,0,0,-0.04083428,26.336972,224.97794)"
-       style="fill:#000000;stroke:none" />
+       style="font-weight:500;font-size:72.0938px;line-height:125%;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans Medium';letter-spacing:0px;word-spacing:0px;white-space:pre;inline-size:51.0177;fill:#ffffff;stroke-width:1px"
+       d="m 121.61191,73.084473 q 1.00931,0 2.16281,0.144187 1.2256,0.07209 2.09072,0.216282 l -0.79303,7.137286 q -1.87444,-0.504656 -3.89306,-0.504656 -2.88376,0 -5.47913,1.441876 -2.52329,1.441876 -4.10935,4.18144 -1.51397,2.667471 -1.51397,6.488443 v 20.474639 h -7.64194 V 73.805411 h 6.05588 l 1.00931,6.921005 h 0.28838 q 1.87443,-3.100034 4.83028,-5.334941 2.95585,-2.307002 6.9931,-2.307002 z"
+       id="text1"
+       transform="matrix(3.158732,0,0,3.158732,-218.24363,-161.8553)"
+       aria-label="r" />
   </g>
 </svg>

@@ -1,0 +1,29 @@
+version: 2
+
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: daily
+    groups:
+      actions:
+        patterns:
+          - "*"
+
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: daily
+    versioning-strategy: increase
+    groups:
+      babel:
+        patterns:
+          - "@babel/*"
+      postcss:
+        patterns:
+          - "postcss*"
+
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: daily
