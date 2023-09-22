@@ -49,18 +49,29 @@ const { page } = Astro.props
   <h1>
     Reupen’s photos{page.currentPage > 1 && <> – page {page.currentPage}</>}
   </h1>
-  <p>Here’s a selection of photos I’ve taken over the years.</p>
+  {
+    page.currentPage === 1 && (
+      <p>
+        Here’s a selection of photos I’ve taken over the years.{" "}
+        <a href="https://astro.build">More about the site.</a>
+      </p>
+    )
+  }
   {
     page.data.map((image, index) => (
       <div>
         {(image.isNewMonth || index === 0) && (
           <h2>
             {format(image.data.exif.date, "MMMM yyyy")}
-            {index === 0 && " (continued)"}
+            {index === 0 && !image.isNewMonth && " (continued)"}
           </h2>
         )}
-        <a href={`/image/${image.slug}`}>
-          <Picture class="home-picture" src={image.data.src} />
+        <a id={image.slug} href={`/image/${image.slug}`}>
+          <Picture
+            class="home-picture"
+            src={image.data.src}
+            alt={image.data.title}
+          />
         </a>
       </div>
     ))
@@ -92,9 +103,7 @@ const { page } = Astro.props
       }
     </div>
   </div>
-  <p>
-    This website was built using{" "}
-    <a href="https://astro.build">Astro</a> and is{" "}
-    <a href="https://github.com/reupen/yuo.be">open source</a>.
-  </p>
+  <script is:inline>
+    window._photosReupenUKVisitedHome = true
+  </script>
 </Layout>

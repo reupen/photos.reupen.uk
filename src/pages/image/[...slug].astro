@@ -17,6 +17,9 @@ export async function getStaticPaths() {
 const images = await getImages()
 const { entry, index }: { entry: CollectionEntry<"images"> } = Astro.props
 const { Content } = await entry.render()
+
+const homePageNumber = Math.floor(index / 10) + 1
+const homePagePath = homePageNumber == 1 ? "/" : `/${homePageNumber}`
 ---
 
 <style>
@@ -26,8 +29,8 @@ const { Content } = await entry.render()
     width: fit-content;
   }
 
-  .standalone-picture,
-  .standalone-picture :global(img) {
+  .standalone-picture.picture,
+  .standalone-picture.picture :global(img) {
     height: fit-content;
     max-height: 43vw;
     max-width: 100%;
@@ -35,7 +38,7 @@ const { Content } = await entry.render()
     margin-bottom: 1rem;
   }
 
-  .standalone-fullscreen-picture {
+  .standalone-fullscreen-picture.picture {
     &,
     :global(img) {
       height: 0;
@@ -63,11 +66,16 @@ const { Content } = await entry.render()
     flex: 1;
   }
 
-  #fullscreen-link {
-    display: block;
+  .secondary-links {
+    display: flex;
     margin-top: 0.85rem;
+    column-gap: 0.85rem;
+  }
 
-    &[hidden] {
+  #fullscreen-link {
+    cursor: pointer;
+
+    &[hidden="hidden"] {
       display: none;
     }
   }
@@ -156,9 +164,14 @@ const { Content } = await entry.render()
           <dd><span aria-hidden="true">ISO</span>{" "}{entry.data.exif.iso}</dd>
         </dl>
         <Content />
-        <a id="fullscreen-link" class="control" hidden="hidden">
-          <span>View fullscreen</span>
-        </a>
+        <div class="secondary-links">
+          <a id="fullscreen-link" class="control" hidden="hidden">
+            <span>View fullscreen</span>
+          </a>
+          <a id="return-link" href={`${homePagePath}#${entry.slug}`}
+            >Return to photo list</a
+          >
+        </div>
       </div>
       <div class="details-nav">
         <div class="nav">
@@ -190,8 +203,8 @@ const { Content } = await entry.render()
 
 <script>
   const fullScreenButton = document.getElementById("fullscreen-link")
-  fullScreenButton.removeAttribute("hidden")
-  fullScreenButton.addEventListener("click", () => {
+  fullScreenButton?.removeAttribute("hidden")
+  fullScreenButton?.addEventListener("click", () => {
     document.getElementById("fullscreen-picture").requestFullscreen()
   })
 
@@ -201,5 +214,14 @@ const { Content } = await entry.render()
     } else if (event.key === "ArrowRight") {
       document.getElementById("next-link").click()
     }
+  })
+
+  const returnLink = document.getElementById("return-link")
+
+  returnLink?.addEventListener("click", (event) => {
+    if (!window.history || !window._photosReupenUKVisitedHome) return
+
+    window.history.back()
+    event.preventDefault()
   })
 </script>
