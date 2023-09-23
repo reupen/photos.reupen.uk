@@ -18,8 +18,8 @@
     "prepare": "husky install",
     "preview": "astro preview",
     "start": "astro dev",
-    "test": "python scripts/run_e2e_tests.py",
-    "test:update": "python scripts/run_e2e_tests_update_snapshots.py"
+    "test": "python scripts/run_in_playwright_container.py \"npm ci && npm exec --no -- playwright test\"",
+    "test:update": "python scripts/run_in_playwright_container.py \"npm ci && npm exec --no -- playwright test --update-snapshots\""
   },
   "dependencies": {
     "@astrojs/check": "^0.2.0",
