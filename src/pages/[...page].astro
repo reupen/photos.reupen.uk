@@ -52,5 +52,9 @@ const isFirstPage = page.currentPage === 1
       </div>
     ))
   }
-  <Pagination previousHref={page.url.prev} nextHref={page.url.next} />
+  <Pagination
+    entryName="page"
+    previousHref={page.url.prev}
+    nextHref={page.url.next}
+  />
 </Layout>

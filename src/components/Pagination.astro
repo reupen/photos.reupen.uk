@@ -3,9 +3,10 @@ export interface Props {
   class: string
   nextHref?: string
   previousHref?: string
+  entryName: string
 }
 
-const { class: class_, nextHref, previousHref } = Astro.props
+const { class: class_, nextHref, previousHref, entryName } = Astro.props
 ---
 
 <style>
@@ -44,7 +45,9 @@ const { class: class_, nextHref, previousHref } = Astro.props
           <span>
             <i class="fa-solid fa-chevron-left" />
             &nbsp;
-            <span class="nav-link-text">Previous</span>
+            <span class="nav-link-text">
+              Previous<span class="visually hidden"> {entryName}</span>
+            </span>
           </span>
         </a>
       )
@@ -55,7 +58,10 @@ const { class: class_, nextHref, previousHref } = Astro.props
       nextHref && (
         <a href={nextHref}>
           <span>
-            <span class="nav-link-text">Next</span>&nbsp;
+            <span class="nav-link-text">
+              Next<span class="visually hidden"> {entryName}</span>
+            </span>
+            &nbsp;
             <i class="fa-solid fa-chevron-right" />
           </span>
         </a>

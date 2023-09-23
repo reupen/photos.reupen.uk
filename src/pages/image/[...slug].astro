@@ -160,6 +160,7 @@ const homePagePath = homePageNumber == 1 ? "/" : `/${homePageNumber}`
 </style>
 
 <Layout title={entry.data.title} fullWidth>
+  <h1 class="visually-hidden">Image: {entry.data.title}</h1>
   <div class="wrapper">
     <Picture
       id="fullscreen-picture"
@@ -182,6 +183,7 @@ const homePagePath = homePageNumber == 1 ? "/" : `/${homePageNumber}`
         <div class="details-nav">
           <Pagination
             class="pagination-image-page"
+            entryName="image"
             previousHref={index > 0
               ? `/image/${images[index - 1].slug}`
               : undefined}
