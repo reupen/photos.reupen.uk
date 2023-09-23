@@ -34,9 +34,12 @@ async function safeGetImage(
   return getImage(options)
 }
 
-async function generateImages(format: Parameters<getImage>[0]["format"]) {
+async function generateImages(
+  format: Parameters<getImage>[0]["format"],
+  quality: number,
+) {
   return Promise.all(
-    widths.map((width) => safeGetImage({ src, width, format, quality: 95 })),
+    widths.map((width) => safeGetImage({ src, width, format, quality })),
   )
 }
 
@@ -44,8 +47,8 @@ function makeSrcset(images: Awaited<ReturnValue<getImage>>[]) {
   return images.map((image) => `${image.src} ${image.options.width}w`).join(",")
 }
 
-const avifImages = await generateImages("avif")
-const webpImages = await generateImages("webp")
+const avifImages = await generateImages("avif", 95)
+const webpImages = await generateImages("webp", 90)
 const fallbackImage = webpImages[0]
 ---
 
