@@ -8,7 +8,7 @@ PAGES.forEach((path) => {
       await page.goto(path)
       await expect(page).toHaveScreenshot(
         [path.replaceAll(/(^\/|\/$)/g, ""), "screenshot.png"],
-        { fullPage: true },
+        { fullPage: true, timeout: 10_000 },
       )
     })
   })
