@@ -3,10 +3,10 @@ import { baseService } from "astro/assets"
 import sharp from "sharp"
 
 const service: LocalImageService = {
-  validateOptions: baseService.validateOptions,
+  getHTMLAttributes: baseService.getHTMLAttributes,
   getURL: baseService.getURL,
   parseURL: baseService.parseURL,
-  getHTMLAttributes: baseService.getHTMLAttributes,
+  validateOptions: baseService.validateOptions,
   async transform(inputBuffer, transform) {
     const { data, info } = await sharp(inputBuffer)
       .withMetadata()
