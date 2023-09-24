@@ -26,7 +26,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-astro-
 
-      - uses: actions/setup-node@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -73,7 +74,8 @@ jobs:
       - name: Git clone repository
         uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -93,7 +95,8 @@ jobs:
       - name: Run e2e tests
         run: npm exec --no -- playwright test
 
-      - uses: actions/upload-artifact@v3
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
         if: always()
         with:
           name: e2e-test-results
