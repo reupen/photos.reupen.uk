@@ -18,7 +18,9 @@
     "prepare": "husky install",
     "preview": "astro preview",
     "start": "astro dev",
+    "pretest": "npm run build",
     "test": "python scripts/run_in_playwright_container.py \"npm ci && npm exec --no -- playwright test\"",
+    "pretest:update": "npm run build",
     "test:update": "python scripts/run_in_playwright_container.py \"npm ci && npm exec --no -- playwright test --update-snapshots\""
   },
   "dependencies": {
