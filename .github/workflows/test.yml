@@ -16,7 +16,7 @@ jobs:
       version: ${{ steps.get-version.outputs.version }}
     steps:
       - name: Git clone repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -54,7 +54,7 @@ jobs:
       version: ${{ steps.get-version.outputs.version }}
     steps:
       - name: Git clone repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - id: get-version
         name: Get Playwright version
@@ -72,7 +72,7 @@ jobs:
       options: --user 1001
     steps:
       - name: Git clone repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
