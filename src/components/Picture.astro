@@ -1,0 +1,64 @@
+---
+import type { ImageMetadata } from "astro"
+import { getImage } from "astro:assets"
+export interface Props {
+  id?: string
+  class: string
+  alt: string
+  title?: string
+  src: ImageMetadata
+}
+
+const { class: class_, id, src, alt, title } = Astro.props
+
+const widths = [
+  src.width,
+  ...[960 * 2, 960, 600, 300].filter((width) => width < src.width),
+]
+
+async function generateImages(
+  format: Parameters<typeof getImage>[0]["format"],
+  quality: number,
+) {
+  return Promise.all(
+    widths.map((width) => getImage({ src, width, format, quality })),
+  )
+}
+
+function makeSrcset(images: Awaited<ReturnType<typeof getImage>>[]) {
+  return images.map((image) => `${image.src} ${image.options.width}w`).join(",")
+}
+
+const avifImages = await generateImages("avif", 75)
+const webpImages = await generateImages("webp", 86)
+const fallbackImage = webpImages[0]
+---
+
+<style>
+  .picture,
+  .picture img {
+    height: auto;
+    width: 100%;
+  }
+</style>
+
+<picture class:list={["picture", class_]} id={id} title={title}>
+  <source
+    srcset={makeSrcset(avifImages)}
+    type="image/avif"
+    width={src.width}
+    height={src.height}
+  />
+  <source
+    srcset={makeSrcset(webpImages)}
+    type="image/webp"
+    width={src.width}
+    height={src.height}
+  />
+  <img
+    src={fallbackImage.src}
+    width={src.width}
+    height={src.height}
+    alt={alt}
+  />
+</picture>

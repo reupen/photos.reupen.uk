@@ -1,0 +1,66 @@
+---
+import type { Page, PaginateFunction } from "astro"
+import { format } from "date-fns"
+
+import Layout from "../layouts/Layout.astro"
+import { Pagination, Picture } from "../components"
+import { getImages } from "../utils/getImages"
+
+export async function getStaticPaths({
+  paginate,
+}: {
+  paginate: PaginateFunction
+}) {
+  const images = await getImages()
+  return paginate(images, { pageSize: 10 })
+}
+
+const { page } = Astro.props as {
+  page: Page<Awaited<ReturnType<typeof getImages>>[0]>
+}
+const isFirstPage = page.currentPage === 1
+---
+
+<style>
+  .home-picture :global(img) {
+    margin-bottom: 1.25rem;
+  }
+</style>
+
+<Layout title={!isFirstPage ? `Page ${page.currentPage}` : undefined}>
+  <h1>
+    Reupen’s photos{!isFirstPage && <> – page {page.currentPage}</>}
+  </h1>
+  {
+    isFirstPage && (
+      <p>
+        Here’s a selection of photos I’ve taken over the years.{" "}
+        <a href="/about/">More about the site.</a>
+      </p>
+    )
+  }
+  {
+    page.data.map((image, imageIndex) => (
+      <div>
+        {(image.isNewMonth || imageIndex === 0) && (
+          <h2>
+            {format(image.data.exif.date, "MMMM yyyy")}
+            {imageIndex === 0 && !image.isNewMonth && " (continued)"}
+          </h2>
+        )}
+        <a id={image.slug} href={`/image/${image.slug}/`}>
+          <Picture
+            class="home-picture"
+            src={image.data.src}
+            alt={image.data.title}
+          />
+        </a>
+      </div>
+    ))
+  }
+  <Pagination
+    entryName="page"
+    previousHref={page.url.prev}
+    nextHref={page.url.next}
+  />
+</Layout>

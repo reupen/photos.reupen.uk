@@ -1,0 +1,71 @@
+---
+export interface Props {
+  class?: string
+  nextHref?: string
+  previousHref?: string
+  entryName: string
+}
+
+const { class: class_, nextHref, previousHref, entryName } = Astro.props
+---
+
+<style>
+  .pagination {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    font-size: 20px;
+
+    .next {
+      justify-self: right;
+    }
+
+    & a {
+      & span {
+        display: flex;
+        align-items: center;
+      }
+
+      &:hover {
+        text-decoration: none;
+
+        .nav-link-text {
+          text-decoration: underline;
+          text-underline-offset: 4px;
+        }
+      }
+    }
+  }
+</style>
+
+<div class:list={["pagination", class_]}>
+  <div class="previous">
+    {
+      previousHref && (
+        <a href={previousHref}>
+          <span>
+            <i class="fa-solid fa-chevron-left" />
+            &nbsp;
+            <span class="nav-link-text">
+              Previous<span class="visually-hidden"> {entryName}</span>
+            </span>
+          </span>
+        </a>
+      )
+    }
+  </div>
+  <div class="next">
+    {
+      nextHref && (
+        <a href={nextHref}>
+          <span>
+            <span class="nav-link-text">
+              Next<span class="visually-hidden"> {entryName}</span>
+            </span>
+            &nbsp;
+            <i class="fa-solid fa-chevron-right" />
+          </span>
+        </a>
+      )
+    }
+  </div>
+</div>

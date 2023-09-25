@@ -1,0 +1,162 @@
+@custom-media --tablet (min-width: 750px);
+
+:global(body) {
+  margin-bottom: 50px;
+
+  @media (--tablet) {
+    margin-bottom: 0;
+  }
+}
+
+dl {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 1.1rem;
+  margin: 0 auto 0;
+}
+
+dt,
+dd {
+  display: inline;
+  margin: 0.2rem 0;
+
+  @media (--tablet) {
+    margin: 0;
+  }
+}
+
+dd {
+  margin-left: 0;
+}
+
+.mobile-full-break {
+  width: 100%;
+
+  @media (--tablet) {
+    width: auto;
+  }
+}
+
+.tablet-plus {
+  display: none;
+
+  @media (--tablet) {
+    display: initial;
+  }
+}
+
+.wrapper {
+  display: block;
+  margin: 0 auto;
+  width: auto;
+}
+
+.standalone-picture.picture {
+  &,
+  :global(img) {
+    position: relative;
+    height: fit-content;
+    width: auto;
+    max-height: calc(100vh - 12rem);
+    object-fit: scale-down;
+    margin: 0 auto 1rem;
+  }
+}
+
+.standalone-fullscreen-picture.picture {
+  cursor: pointer;
+
+  &,
+  :global(img) {
+    height: 0;
+    width: 0;
+  }
+}
+
+.standalone-fullscreen-picture:fullscreen {
+  &,
+  :global(img) {
+    object-fit: scale-down;
+    height: 100vh;
+    width: 100vw;
+  }
+}
+
+.title {
+  flex: 1;
+  font-size: 20px;
+  margin: 0 0 0.85rem;
+}
+
+.title-date {
+  font-size: 16px;
+
+  @media (--tablet) {
+    font-size: 20px;
+  }
+}
+
+.title-name {
+  display: block;
+  margin-top: 1rem;
+
+  @media (--tablet) {
+    display: inline;
+    margin-top: 0;
+  }
+}
+
+.pagination-image-page {
+  position: fixed;
+  left: 0;
+  padding: 0 1rem 1rem;
+  bottom: 0;
+  width: 100%;
+  font-size: 20px;
+  height: 50px;
+  background: rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(8px);
+
+  @media (--tablet) {
+    position: static;
+    display: flex;
+    padding: 0;
+    column-gap: 1rem;
+    background: none;
+    height: auto;
+  }
+}
+
+.details {
+  display: flex;
+  max-width: 1377px;
+  margin: 0 auto;
+}
+
+.details-top-row {
+  display: flex;
+}
+
+.details-left {
+  flex: 1;
+}
+
+.secondary-links {
+  display: flex;
+  flex-flow: column;
+  margin-top: 0.85rem;
+  row-gap: 0.5rem;
+
+  @media (--tablet) {
+    flex-flow: row;
+    column-gap: 0.85rem;
+  }
+}
+
+#fullscreen-link {
+  cursor: pointer;
+
+  &[hidden="hidden"] {
+    display: none;
+  }
+}
