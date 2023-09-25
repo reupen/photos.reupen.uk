@@ -1,0 +1,171 @@
+name: Lint, test and deploy
+
+on:
+  pull_request:
+  workflow_call:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git clone repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install Node.js dependencies
+        run: npm ci
+
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Run Astro check
+        run: npm run check
+
+      - name: Lint
+        run: npm run lint
+
+  build-site:
+    name: Build site
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git clone repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install Node.js dependencies
+        run: npm ci
+
+      - name: Pull LFS source files
+        run: git lfs pull --include=src
+
+      - name: Restore Astro cache
+        uses: actions/cache@v3
+        with:
+          path: node_modules/.astro
+          key: ${{ runner.os }}-astro-${{ hashFiles('**/package-lock.json', 'src/content/images/*.webp', 'src/content/images/*.jpg') }}
+
+      - name: Build site
+        run: |
+          npm run build
+          tar -czvf /tmp/site.tar.gz dist/
+
+      - name: Upload artefact
+        uses: actions/upload-artifact@v3
+        with:
+          name: site
+          path: /tmp/site.tar.gz
+          retention-days: 1
+
+  get-playwright-version:
+    name: Get Playwright version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get-version.outputs.version }}
+    steps:
+      - name: Git clone repository
+        uses: actions/checkout@v4
+
+      - id: get-version
+        name: Get Playwright version
+        run: |
+          echo "version=$(python scripts/get_playwright_version.py)" >> "$GITHUB_OUTPUT"
+
+  test-e2e:
+    name: Run e2e tests
+    runs-on: ubuntu-latest
+    needs:
+      - build-site
+      - get-playwright-version
+    container:
+      image: mcr.microsoft.com/playwright:v${{ needs.get-playwright-version.outputs.version }}
+    steps:
+      - name: Install Git LFS
+        run: |
+          curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
+          apt-get install -y git-lfs
+
+      - name: Git clone repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install Node.js dependencies
+        run: npm ci
+
+      - name: Download built site
+        uses: actions/download-artifact@v3
+        with:
+          name: site
+          path: /tmp
+
+      - name: Unpack site
+        run: tar -xzf /tmp/site.tar.gz
+
+      - name: Pull LFS test snapshots
+        run: |
+          git config --global --add safe.directory "$(pwd)"
+          git lfs pull --include=test/e2e
+
+      - name: Run e2e tests
+        run: npm exec --no -- playwright test
+        env:
+          HOME: /root
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: e2e-test-results
+          path: test/e2e/output
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    needs:
+      - build-site
+      - lint
+      - test-e2e
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download built site
+        uses: actions/download-artifact@v3
+        with:
+          name: site
+          path: /tmp
+
+      - name: Unpack site
+        run: tar -xzf /tmp/site.tar.gz
+
+      - name: Publish to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: a15c47006c45966652a70d01bf3629a5
+          projectName: photos-reupen-uk
+          directory: dist/
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          wranglerVersion: "3"

@@ -1,0 +1,132 @@
+---
+import "@fontsource-variable/inter"
+
+import "./font-awesome.scss"
+
+export interface Props {
+  title?: string
+  description?: string
+  fullWidth?: boolean
+}
+
+const siteTitle = "Reupen’s photos"
+const siteDescription = "Photos I’ve taken"
+const siteAuthor = "Reupen Shah"
+const { title, description, fullWidth, ...rest } = Astro.props
+
+const computedDescription = description || siteDescription
+const computedTitle =
+  title && title !== siteTitle ? `${title} – ${siteTitle}` : siteTitle
+---
+
+<html lang="en" {...rest}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <title>{computedTitle}</title>
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={computedDescription} />
+    <meta name="og:title" content={computedTitle} />
+    <meta name="og:site_name" content={siteTitle} />
+    <meta name="og:description" content={computedDescription} />
+    <meta name="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:creator" content={siteAuthor} />
+    <meta name="twitter:title" content={computedTitle} />
+    <meta name="twitter:description" content={computedDescription} />
+  </head>
+  <body data-swipe-threshold="75">
+    <div class={fullWidth ? "container-wide" : "container"}>
+      <main>
+        <slot />
+      </main>
+    </div>
+  </body>
+</html>
+
+<style>
+  :root {
+    --body-margin: 1.5rem;
+  }
+
+  :global(*),
+  :global(*):after,
+  :global(*):before {
+    box-sizing: border-box;
+  }
+
+  :global(body) {
+    margin: max(env(safe-area-inset-top, 0), var(--body-margin))
+      max(env(safe-area-inset-right, 0), var(--body-margin))
+      max(env(safe-area-inset-bottom, 0), var(--body-margin))
+      max(env(safe-area-inset-left, 0), var(--body-margin));
+  }
+
+  :global(html) {
+    background: #000;
+    color: #fff;
+    font-family: "Inter Variable", system-ui, sans-serif;
+  }
+
+  :global(img) {
+    display: block;
+  }
+
+  :global(h1) {
+    font-size: 42px;
+    margin: 2rem 0 1.5rem;
+  }
+
+  :global(h2) {
+    font-size: 32px;
+    margin: 2.5rem 0 1rem;
+  }
+
+  :global(h1, h2) {
+    font-weight: 550;
+  }
+
+  :global(a) {
+    text-decoration: none;
+    font-weight: 450;
+
+    &,
+    :visited {
+      color: #ff5a00;
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  :global(p) {
+    line-height: 1.4;
+  }
+
+  :global(.visually-hidden) {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .container-wide {
+    margin: 0 auto;
+  }
+
+  .flex {
+    display: flex;
+    flex-flow: column;
+  }
+</style>
