@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="256.0px"
+   height="256.0px"
+   viewBox="0 0 256.0 256.0"
+   version="1.1"
+   id="SVGRoot"
+   sodipodi:docname="favicon.svg"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview14"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="px"
+     showgrid="true"
+     inkscape:zoom="2.4656884"
+     inkscape:cx="178.44915"
+     inkscape:cy="200.95808"
+     inkscape:window-width="3840"
+     inkscape:window-height="2068"
+     inkscape:window-x="-12"
+     inkscape:window-y="-12"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     inkscape:showpageshadow="2"
+     inkscape:deskcolor="#d1d1d1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid20"
+       originx="0"
+       originy="0"
+       spacingy="1"
+       spacingx="1"
+       units="px"
+       visible="true" />
+  </sodipodi:namedview>
+  <defs
+     id="defs9">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath1867">
+      <circle
+         cx="128"
+         cy="128"
+         r="128"
+         style="display:inline;fill:none;stroke:none"
+         id="circle198" />
+    </clipPath>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <circle
+       style="display:inline;fill:#000000;fill-opacity:1"
+       id="path69"
+       r="128"
+       cy="128"
+       cx="128" />
+    <circle
+       style="display:inline;fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:20;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.55"
+       id="circle1613"
+       cx="128"
+       cy="128"
+       r="128"
+       clip-path="url(#clipPath1867)" />
+    <path
+       style="font-weight:500;font-size:72.0938px;line-height:125%;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans Medium';letter-spacing:0px;word-spacing:0px;white-space:pre;inline-size:51.0177;fill:#ffffff;stroke-width:1px"
+       d="m 121.61191,73.084473 q 1.00931,0 2.16281,0.144187 1.2256,0.07209 2.09072,0.216282 l -0.79303,7.137286 q -1.87444,-0.504656 -3.89306,-0.504656 -2.88376,0 -5.47913,1.441876 -2.52329,1.441876 -4.10935,4.18144 -1.51397,2.667471 -1.51397,6.488443 v 20.474639 h -7.64194 V 73.805411 h 6.05588 l 1.00931,6.921005 h 0.28838 q 1.87443,-3.100034 4.83028,-5.334941 2.95585,-2.307002 6.9931,-2.307002 z"
+       id="text1"
+       transform="matrix(3.158732,0,0,3.158732,-218.24363,-161.8553)"
+       aria-label="r" />
+  </g>
+</svg>

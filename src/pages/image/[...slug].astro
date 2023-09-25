@@ -1,0 +1,108 @@
+---
+import { format } from "date-fns"
+
+import Layout from "../../layouts/Layout.astro"
+import Picture from "../../components/Picture.astro"
+import { getImages } from "../../utils/getImages"
+import Pagination from "../../components/Pagination.astro"
+
+export async function getStaticPaths() {
+  return (await getImages()).map((entry, index) => ({
+    params: { slug: entry.slug },
+    props: { entry, index },
+  }))
+}
+
+const images = await getImages()
+
+const { entry, index } = Astro.props as Awaited<
+  ReturnType<typeof getStaticPaths>
+>[0]["props"]
+const { Content } = await entry.render()
+
+const homePageNumber = Math.floor(index / 10) + 1
+const homePagePath = homePageNumber == 1 ? "/" : `/${homePageNumber}/`
+const previousPath = index > 0 ? `/image/${images[index - 1].slug}/` : undefined
+const nextPath =
+  index + 1 < images.length ? `/image/${images[index + 1].slug}/` : undefined
+---
+
+<style>
+  @import "./_[...slug].pcss";
+</style>
+
+<Layout
+  title={entry.data.title}
+  fullWidth
+  data-previous-path={previousPath}
+  data-next-path={nextPath}
+>
+  <h1 class="visually-hidden">Image: {entry.data.title}</h1>
+  <div class="wrapper">
+    <Picture
+      id="fullscreen-picture"
+      class="standalone-fullscreen-picture"
+      src={entry.data.src}
+      alt={entry.data.title}
+      title="Exit fullscreen"
+    />
+    <Picture
+      id="standalone-picture"
+      class="standalone-picture"
+      src={entry.data.src}
+      alt={entry.data.title}
+    />
+  </div>
+  <div class="details">
+    <div class="details-left">
+      <div class="details-top-row">
+        <div class="title">
+          <span class="title-date">
+            {format(entry.data.exif.date, "d MMMM yyyy")}
+          </span>
+          <span aria-hidden="true" class="tablet-plus">{" • "}</span>
+          <span class="title-name">{entry.data.title}</span>
+        </div>
+        <div class="details-nav">
+          <Pagination
+            class="pagination-image-page"
+            entryName="image"
+            previousHref={previousPath}
+            nextHref={nextPath}
+          />
+        </div>
+      </div>
+      <dl>
+        <dt class="visually-hidden">Camera</dt>
+        <dd class="mobile-full-break" title="Camera">
+          {entry.data.exif.cameraModel}
+        </dd>
+        <dt class="visually-hidden">Lens</dt>
+        <dd class="mobile-full-break" title="Lens">
+          {entry.data.exif.lensModel}
+        </dd>
+        <dt class="visually-hidden">Focal length</dt>
+        <dd title="Focal length">
+          {entry.data.exif.focalLength?.replace(" ", "")}
+        </dd>
+        <dt class="visually-hidden">f-number</dt>
+        <dd title="f-number">ƒ/{entry.data.exif.fNumber}</dd>
+        <dt class="visually-hidden">Exposure time</dt>
+        <dd title="Exposure time">{entry.data.exif.exposureTime}s</dd>
+        <dt class="visually-hidden">ISO</dt>
+        <dd><span aria-hidden="true">ISO</span>{" "}{entry.data.exif.iso}</dd>
+      </dl>
+      <Content />
+      <div class="secondary-links">
+        <a id="fullscreen-link" class="control" hidden="hidden">
+          <span>View fullscreen</span>
+        </a>
+        <a href={`${homePagePath}#${entry.slug}`}>Return to photo list</a>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  import "./_[...slug]"
+</script>
