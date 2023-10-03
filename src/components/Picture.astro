@@ -7,9 +7,10 @@ export interface Props {
   alt: string
   title?: string
   src: ImageMetadata
+  sizes?: string
 }
 
-const { class: class_, id, src, alt, title } = Astro.props
+const { class: class_, id, src, alt, sizes, title } = Astro.props
 
 const widths = [
   src.width,
@@ -47,12 +48,14 @@ const fallbackImage = webpImages[0]
     type="image/avif"
     width={src.width}
     height={src.height}
+    sizes={sizes}
   />
   <source
     srcset={makeSrcset(webpImages)}
     type="image/webp"
     width={src.width}
     height={src.height}
+    sizes={sizes}
   />
   <img
     src={fallbackImage.src}
