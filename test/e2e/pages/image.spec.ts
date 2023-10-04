@@ -11,8 +11,8 @@ test.describe("/empire-state-building-new-york-city/", () => {
   }) => {
     await page.getByText("Previous").click()
 
-    await expect(page).toHaveTitle("Waxing gibbous moon – Reupen’s photos")
-    expect(page.url()).toBe(`${baseURL}/image/waxing-gibbous-moon/`)
+    await expect(page).toHaveTitle("Almost full moon – Reupen’s photos")
+    expect(page.url()).toBe(`${baseURL}/image/almost-full-moon/`)
   })
 
   test("can navigate to the previous image by left arrow", async ({
@@ -21,8 +21,8 @@ test.describe("/empire-state-building-new-york-city/", () => {
   }) => {
     await page.keyboard.press("ArrowLeft")
 
-    await expect(page).toHaveTitle("Waxing gibbous moon – Reupen’s photos")
-    expect(page.url()).toBe(`${baseURL}/image/waxing-gibbous-moon/`)
+    await expect(page).toHaveTitle("Almost full moon – Reupen’s photos")
+    expect(page.url()).toBe(`${baseURL}/image/almost-full-moon/`)
   })
 
   test("can navigate to the next image by link", async ({ baseURL, page }) => {
