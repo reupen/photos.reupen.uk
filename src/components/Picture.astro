@@ -30,8 +30,8 @@ function makeSrcset(images: Awaited<ReturnType<typeof getImage>>[]) {
   return images.map((image) => `${image.src} ${image.options.width}w`).join(",")
 }
 
-const avifImages = await generateImages("avif", 75)
-const webpImages = await generateImages("webp", 86)
+const avifImages = await generateImages("avif", 80)
+const webpImages = await generateImages("webp", 87.5)
 const fallbackImage = webpImages[0]
 ---
 
