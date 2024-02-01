@@ -54,7 +54,7 @@ jobs:
         run: git lfs pull --include=src
 
       - name: Restore Astro cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: node_modules/.astro
           key: ${{ runner.os }}-astro-${{ hashFiles('**/package-lock.json', 'src/content/images/*.webp', 'src/content/images/*.jpg') }}
@@ -65,7 +65,7 @@ jobs:
           tar -czvf /tmp/site.tar.gz dist/
 
       - name: Upload artefact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: site
           path: /tmp/site.tar.gz
@@ -112,7 +112,7 @@ jobs:
         run: npm ci
 
       - name: Download built site
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: site
           path: /tmp
@@ -131,7 +131,7 @@ jobs:
           HOME: /root
 
       - name: Upload test results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: e2e-test-results
@@ -152,7 +152,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Download built site
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: site
           path: /tmp
