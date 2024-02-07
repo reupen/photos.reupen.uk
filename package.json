@@ -34,7 +34,7 @@
     "astro": "^3.4.4",
     "astro-compress": "^2.2.3",
     "date-fns": "^2.30.0",
-    "exiftool-vendored": "^23.3.0",
+    "exiftool-vendored": "^24.4.0",
     "sass": "^1.69.2",
     "swiped-events": "^1.1.7",
     "typescript": "^5.2.2"
