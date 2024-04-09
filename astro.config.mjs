@@ -1,5 +1,5 @@
 import { defineConfig } from "astro/config"
-import compress from "astro-compress"
+import compress from "@playform/compress"
 import sitemap from "@astrojs/sitemap"
 
 // https://astro.build/config
