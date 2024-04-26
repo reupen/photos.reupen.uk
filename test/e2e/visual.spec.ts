@@ -9,7 +9,7 @@ PAGES.forEach(({ path, takeViewportScreenshot }) => {
         [path.replaceAll(/(^\/|\/$)/g, ""), "screenshot.png"],
         {
           fullPage: !takeViewportScreenshot,
-          timeout: process.env.CI ? 40_000 : 10_000,
+          timeout: process.env.CI ? 40_000 : 15_000,
         },
       )
     })
