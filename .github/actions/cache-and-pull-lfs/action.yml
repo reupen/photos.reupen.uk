@@ -1,0 +1,26 @@
+name: Cache and pull Git LFS files
+description: Cache and pull Git LFS files
+inputs:
+  path:
+    required: true
+    description: Path of LFS files to cache and pull
+runs:
+  using: composite
+  steps:
+    - name: Save LFS file listing
+      shell: bash
+      run: |
+        git lfs ls-files --include='${{ inputs.path }}' > .lfs-listing
+
+    - name: Restore LFS cache
+      uses: actions/cache@v4
+      with:
+        path: .git/lfs/objects
+        key: lfs-${{ inputs.path }}-${{ hashFiles('.lfs-listing') }}
+        restore-keys: |
+          lfs-${{ inputs.path }}-
+
+    - name: Pull LFS files
+      shell: bash
+      run: |
+        git lfs pull --include='${{ inputs.path }}'
