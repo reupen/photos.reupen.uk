@@ -2,11 +2,13 @@ name: Lint, test and deploy
 
 on:
   pull_request:
-  workflow_call:
-  workflow_dispatch:
   push:
     branches:
       - main
+  schedule:
+    - cron: "0 2 * * 0"
+  workflow_call:
+  workflow_dispatch:
 
 jobs:
   lint:
@@ -51,7 +53,9 @@ jobs:
         run: npm ci
 
       - name: Pull LFS source files
-        run: git lfs pull --include=src
+        uses: ./.github/actions/cache-and-pull-lfs
+        with:
+          path: src
 
       - name: Restore Astro cache
         uses: actions/cache@v4
@@ -120,10 +124,14 @@ jobs:
       - name: Unpack site
         run: tar -xzf /tmp/site.tar.gz
 
-      - name: Pull LFS test snapshots
+      - name: Mark Git directory as safe
         run: |
           git config --global --add safe.directory "$(pwd)"
-          git lfs pull --include=test/e2e
+
+      - name: Pull LFS test snapshots
+        uses: ./.github/actions/cache-and-pull-lfs
+        with:
+          path: test/e2e
 
       - name: Run e2e tests
         run: npm exec --no -- playwright test
