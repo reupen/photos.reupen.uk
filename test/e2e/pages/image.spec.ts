@@ -5,6 +5,15 @@ test.describe("/empire-state-building-new-york-city/", () => {
     await page.goto("/image/empire-state-building-new-york-city/")
   })
 
+  test("sets the page meta description tag", async ({ baseURL, page }) => {
+    const metaDescription = page.locator("meta[name=description]")
+    await expect(metaDescription).toHaveAttribute(
+      "content",
+      "Another photo taken in a rush (it was very crowded at the Top of the Rock " +
+        "observation deck where I took the photo, and I had an aching leg).",
+    )
+  })
+
   test("can navigate to the previous image by link", async ({
     baseURL,
     page,
