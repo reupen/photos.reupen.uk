@@ -28,10 +28,10 @@ const computedTitle =
     <title>{computedTitle}</title>
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={computedDescription} />
-    <meta name="og:title" content={computedTitle} />
-    <meta name="og:site_name" content={siteTitle} />
-    <meta name="og:description" content={computedDescription} />
-    <meta name="og:type" content="website" />
+    <meta property="og:title" content={title || siteTitle} />
+    <meta property="og:site_name" content={siteTitle} />
+    <meta property="og:description" content={computedDescription} />
+    <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:creator" content={siteAuthor} />
     <meta name="twitter:title" content={computedTitle} />

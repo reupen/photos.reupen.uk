@@ -1,5 +1,7 @@
 ---
+import { experimental_AstroContainer } from "astro/container"
 import { format } from "date-fns"
+import { convert as htmlToText } from "html-to-text"
 
 import Layout from "../../layouts/Layout.astro"
 import Picture from "../../components/Picture.astro"
@@ -20,6 +22,10 @@ const { entry, index } = Astro.props as Awaited<
 >[0]["props"]
 const { Content } = await entry.render()
 
+const container = await experimental_AstroContainer.create()
+const htmlDescription = await container.renderToString(Content)
+const textDescription = htmlToText(htmlDescription, { wordwrap: false })
+
 const homePageNumber = Math.floor(index / 10) + 1
 const homePagePath = homePageNumber == 1 ? "/" : `/${homePageNumber}/`
 const previousPath = index > 0 ? `/image/${images[index - 1].slug}/` : undefined
@@ -32,6 +38,7 @@ const nextPath =
 </style>
 
 <Layout
+  description={textDescription}
   title={entry.data.title}
   fullWidth
   data-previous-path={previousPath}
