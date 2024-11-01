@@ -38,7 +38,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.7.0",
     "@axe-core/playwright": "^4.10.0",
-    "@playform/compress": "^0.0.13",
+    "@playform/compress": "^0.1.6",
     "@playwright/test": "^1.45.0",
     "@types/html-to-text": "^9.0.4",
     "@types/node": "^20.14.9",
