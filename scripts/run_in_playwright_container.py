@@ -26,7 +26,7 @@ def run_in_playwright_container(arg):
         "-it",
         "-e",
         "CI",
-        f"mcr.microsoft.com/playwright:v{playwright_version}",
+        f"mcr.microsoft.com/playwright:v{playwright_version}-noble",
         "bash",
         "-c",
         arg,
