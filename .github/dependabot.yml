@@ -22,6 +22,8 @@ updates:
           - "astro"
           - "astro-*"
           - "@astrojs/*"
+        exclude-patterns:
+          - "astro-purgecss"
       eslint:
         patterns:
           - "eslint"
