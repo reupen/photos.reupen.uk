@@ -45,7 +45,7 @@
     "@types/node": "^22.10.1",
     "@typescript-eslint/eslint-plugin": "^8.13.0",
     "@typescript-eslint/parser": "^8.13.0",
-    "astro-purgecss": "4.1.1",
+    "astro-purgecss": "4.9.0",
     "cssnano": "^7.0.6",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
@@ -57,7 +57,7 @@
     "postcss-preset-env": "^10.1.1",
     "prettier": "^3.3.3",
     "prettier-plugin-astro": "^0.14.1",
-    "purgecss": "^6.0.0",
+    "purgecss": "^7.0.2",
     "sharp": "^0.33.4",
     "shx": "^0.3.4",
     "typescript": "^5.6.3"
