@@ -50,6 +50,22 @@ dd {
   margin-left: 0;
 }
 
+button {
+  background: none;
+  border: none;
+  color: var(--link-color);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 450;
+  padding: 0;
+  user-select: text;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 .mobile-full-break {
   width: 100%;
 
@@ -182,6 +198,7 @@ dd {
 .secondary-links {
   display: flex;
   flex-flow: column;
+  align-items: start;
   margin-top: 0.85rem;
   row-gap: 0.5rem;
 
