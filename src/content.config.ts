@@ -5,7 +5,7 @@ import { join } from "node:path"
 
 const imageCollection = defineCollection({
   loader: glob({
-    base: "./src/content/images",
+    base: "./src/photos",
     pattern: "**/*.md",
   }),
   schema: ({ image }) =>
@@ -20,9 +20,8 @@ const imageCollection = defineCollection({
       },
       z.object({
         title: z.string(),
-        // location: z.string().optional(),
         exif: z.string().transform(async (val, ctx) => {
-          const exif = await exiftool.read(join("src/content/images", val))
+          const exif = await exiftool.read(join("src/photos", val))
 
           if (!(exif.DateTimeOriginal instanceof ExifDateTime)) {
             ctx.addIssue({

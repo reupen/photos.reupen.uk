@@ -3,7 +3,7 @@ from pathlib import Path, PurePath
 
 ROOT_DIR = PurePath(__file__).parents[1]
 
-IMAGES_DIR = Path(ROOT_DIR / "src/content/images")
+IMAGES_DIR = Path(ROOT_DIR / "src/photos")
 OUTPUT_DIR = Path(ROOT_DIR / "dist/_astro")
 
 
