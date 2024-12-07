@@ -48,7 +48,7 @@ const isFirstPage = page.currentPage === 1
             {imageIndex === 0 && !image.isNewMonth && " (continued)"}
           </h2>
         )}
-        <a id={image.slug} href={`/image/${image.slug}/`}>
+        <a id={image.id} href={`/image/${image.id}/`}>
           <Picture
             class="home-picture"
             src={image.data.src}

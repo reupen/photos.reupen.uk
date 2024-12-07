@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - test/*
   schedule:
     - cron: "0 2 * * 0"
   workflow_call:
@@ -26,6 +27,11 @@ jobs:
 
       - name: Install Node.js dependencies
         run: npm ci
+
+      - name: Pull LFS source files
+        uses: ./.github/actions/cache-and-pull-lfs
+        with:
+          path: src
 
       - name: Check formatting
         run: npm run format:check
