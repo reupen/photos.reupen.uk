@@ -1,4 +1,5 @@
 ---
+import { render } from "astro:content"
 import { experimental_AstroContainer } from "astro/container"
 import { format } from "date-fns"
 import { convert as htmlToText } from "html-to-text"
@@ -10,7 +11,7 @@ import Pagination from "../../components/Pagination.astro"
 
 export async function getStaticPaths() {
   return (await getImages()).map((entry, index) => ({
-    params: { slug: entry.slug },
+    params: { slug: entry.id },
     props: { entry, index },
   }))
 }
@@ -20,7 +21,7 @@ const images = await getImages()
 const { entry, index } = Astro.props as Awaited<
   ReturnType<typeof getStaticPaths>
 >[0]["props"]
-const { Content } = await entry.render()
+const { Content } = await render(entry)
 
 const container = await experimental_AstroContainer.create()
 const htmlDescription = await container.renderToString(Content)
@@ -28,9 +29,9 @@ const textDescription = htmlToText(htmlDescription, { wordwrap: false })
 
 const homePageNumber = Math.floor(index / 10) + 1
 const homePagePath = homePageNumber == 1 ? "/" : `/${homePageNumber}/`
-const previousPath = index > 0 ? `/image/${images[index - 1].slug}/` : undefined
+const previousPath = index > 0 ? `/image/${images[index - 1].id}/` : undefined
 const nextPath =
-  index + 1 < images.length ? `/image/${images[index + 1].slug}/` : undefined
+  index + 1 < images.length ? `/image/${images[index + 1].id}/` : undefined
 ---
 
 <style>
@@ -104,7 +105,7 @@ const nextPath =
         <button id="fullscreen-link" hidden="hidden">
           <span>View fullscreen</span>
         </button>
-        <a href={`${homePagePath}#${entry.slug}`}>Return to photo list</a>
+        <a href={`${homePagePath}#${entry.id}`}>Return to photo list</a>
       </div>
     </div>
   </div>

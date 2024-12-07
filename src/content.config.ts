@@ -1,8 +1,13 @@
 import { defineCollection, z } from "astro:content"
+import { glob } from "astro/loaders"
 import { ExifDateTime, exiftool } from "exiftool-vendored"
 import { join } from "node:path"
 
 const imageCollection = defineCollection({
+  loader: glob({
+    base: "./src/content/images",
+    pattern: "**/*.md",
+  }),
   schema: ({ image }) =>
     z.preprocess(
       (val) => {
