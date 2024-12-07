@@ -67,7 +67,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: node_modules/.astro
-          key: ${{ runner.os }}-astro-${{ hashFiles('**/package-lock.json', 'src/content/images/*.webp', 'src/content/images/*.jpg') }}
+          key: ${{ runner.os }}-astro-${{ hashFiles('**/package-lock.json', 'src/photos/*.webp', 'src/photos/*.jpg') }}
 
       - name: Build site
         run: |
