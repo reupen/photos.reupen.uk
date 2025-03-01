@@ -31,7 +31,7 @@
     "@astrojs/sitemap": "^3.2.1",
     "@fontsource-variable/inter": "^5.1.1",
     "@fortawesome/fontawesome-free": "^6.6.0",
-    "astro": "^5.2.3",
+    "astro": "^5.4.1",
     "date-fns": "^4.1.0",
     "sass": "^1.83.0",
     "swiped-events": "^1.2.0"
