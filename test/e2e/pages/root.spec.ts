@@ -14,14 +14,14 @@ test.describe("/", () => {
 
   test("can navigate to an image", async ({ baseURL, page }) => {
     await page
-      .getByRole("img", { name: "The Empire State Building, New York City" })
+      .getByRole("img", { name: "Sydney Opera House at night, Australia" })
       .click()
 
     await expect(page).toHaveTitle(
-      "The Empire State Building, New York City – Reupen’s photos",
+      "Sydney Opera House at night, Australia – Reupen’s photos",
     )
     expect(page.url()).toBe(
-      `${baseURL}/image/empire-state-building-new-york-city/`,
+      `${baseURL}/image/sydney-opera-house-at-night-australia/`,
     )
   })
 })
