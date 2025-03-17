@@ -16,3 +16,5 @@ export async function getImages() {
       ),
   }))
 }
+
+export type Photo = Awaited<ReturnType<typeof getImages>>[0]

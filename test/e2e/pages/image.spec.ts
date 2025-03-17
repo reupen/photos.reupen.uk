@@ -18,7 +18,7 @@ test.describe("/empire-state-building-new-york-city/", () => {
     baseURL,
     page,
   }) => {
-    await page.getByText("Previous").click()
+    await page.getByRole("link", { name: "Previous image" }).click()
 
     await expect(page).toHaveTitle("Almost full moon – Reupen’s photos")
     expect(page.url()).toBe(`${baseURL}/image/almost-full-moon/`)
@@ -35,7 +35,7 @@ test.describe("/empire-state-building-new-york-city/", () => {
   })
 
   test("can navigate to the next image by link", async ({ baseURL, page }) => {
-    await page.getByText("Next").click()
+    await page.getByRole("link", { name: "Next image" }).click()
 
     await expect(page).toHaveTitle(
       "Skyscrapers in front of Central Park, New York City – Reupen’s photos",
@@ -56,7 +56,7 @@ test.describe("/empire-state-building-new-york-city/", () => {
   })
 
   test("can navigate to the index page", async ({ baseURL, page }) => {
-    await page.getByText("Return to photo list").click()
+    await page.getByRole("link", { name: "Reupen’s photos" }).click()
 
     await expect(page).toHaveTitle("Page 2 – Reupen’s photos")
     expect(page.url()).toBe(`${baseURL}/2/#empire-state-building-new-york-city`)

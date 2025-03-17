@@ -41,71 +41,77 @@ const nextPath =
 <Layout
   description={textDescription}
   title={entry.data.title}
+  nextUrl={nextPath}
+  photo={entry}
+  previousUrl={previousPath}
+  returnUrl={`${homePagePath}#${entry.id}`}
   fullWidth
+  showTitle
   data-previous-path={previousPath}
   data-next-path={nextPath}
 >
-  <h1 class="visually-hidden">Image: {entry.data.title}</h1>
-  <div class="wrapper">
-    <Picture
-      id="fullscreen-picture"
-      class="standalone-fullscreen-picture"
-      src={entry.data.src}
-      alt={entry.data.title}
-      title="Exit fullscreen mode"
-    />
-    <Picture
-      id="standalone-picture"
-      class="standalone-picture"
-      src={entry.data.src}
-      alt={entry.data.title}
-    />
-  </div>
-  <div class="details">
-    <div class="details-left">
-      <div class="details-top-row">
-        <div class="title">
-          <span class="title-date">
-            {format(entry.data.exif.date, "d MMMM yyyy")}
-          </span>
-          <span aria-hidden="true" class="tablet-plus">{" • "}</span>
-          <span class="title-name">{entry.data.title}</span>
+  <div class="container-wide short-grid content">
+    <div class="wrapper">
+      <Picture
+        id="fullscreen-picture"
+        class="standalone-fullscreen-picture"
+        src={entry.data.src}
+        alt={entry.data.title}
+        title="Exit fullscreen mode"
+      />
+      <Picture
+        id="standalone-picture"
+        class="standalone-picture"
+        src={entry.data.src}
+        alt={entry.data.title}
+      />
+    </div>
+    <div class="details">
+      <div class="details-left">
+        <div class="details-top-row">
+          <div class="title">
+            <h1 class="title-name">{entry.data.title}</h1>
+          </div>
+          <div class="details-nav">
+            <Pagination
+              class="pagination-image-page"
+              entryName="image"
+              previousHref={previousPath}
+              nextHref={nextPath}
+            />
+          </div>
         </div>
-        <div class="details-nav">
-          <Pagination
-            class="pagination-image-page"
-            entryName="image"
-            previousHref={previousPath}
-            nextHref={nextPath}
-          />
-        </div>
-      </div>
-      <dl>
-        <dt class="visually-hidden">Camera</dt>
-        <dd class="mobile-full-break" title="Camera">
-          {entry.data.exif.cameraModel}
-        </dd>
-        <dt class="visually-hidden">Lens</dt>
-        <dd class="mobile-full-break" title="Lens">
-          {entry.data.exif.lensModel}
-        </dd>
-        <dt class="visually-hidden">Focal length</dt>
-        <dd title="Focal length">
-          {entry.data.exif.focalLength?.replace(" ", "")}
-        </dd>
-        <dt class="visually-hidden">f-number</dt>
-        <dd title="f-number">ƒ/{entry.data.exif.fNumber}</dd>
-        <dt class="visually-hidden">Exposure time</dt>
-        <dd title="Exposure time">{entry.data.exif.exposureTime}s</dd>
-        <dt class="visually-hidden">ISO</dt>
-        <dd><span aria-hidden="true">ISO</span>{" "}{entry.data.exif.iso}</dd>
-      </dl>
-      <Content />
-      <div class="secondary-links">
-        <button id="fullscreen-link" hidden="hidden">
-          <span>View fullscreen</span>
-        </button>
-        <a href={`${homePagePath}#${entry.id}`}>Return to photo list</a>
+        <dl>
+          <dt class="visually-hidden">Date taken</dt>
+          <dd title="Date taken" class="mobile-margin-bottom">
+            <time datetime={entry.data.exif.date.toISOString()}>
+              {format(entry.data.exif.date, "d MMMM yyyy")}
+            </time>
+          </dd>
+          <div class="mobile-full-break"></div>
+          <dt class="visually-hidden">Camera</dt>
+          <dd title="Camera">
+            {entry.data.exif.cameraModel}
+          </dd>
+          <dt class="visually-hidden">Lens</dt>
+          <dd title="Lens">
+            {entry.data.exif.lensModel}
+          </dd>
+          <div class="mobile-full-break"></div>
+          <dt class="visually-hidden">Focal length</dt>
+          <dd title="Focal length">
+            {entry.data.exif.focalLength?.replace(" ", "")}
+          </dd>
+          <dt class="visually-hidden">f-number</dt>
+          <dd title="f-number" class="f-number">ƒ/{entry.data.exif.fNumber}</dd>
+          <dt class="visually-hidden">Exposure time</dt>
+          <dd title="Exposure time">{entry.data.exif.exposureTime}s</dd>
+          <dt class="visually-hidden">ISO</dt>
+          <dd>
+            <span aria-hidden="true">ISO</span>{" "}{entry.data.exif.iso}
+          </dd>
+        </dl>
+        <Content />
       </div>
     </div>
   </div>

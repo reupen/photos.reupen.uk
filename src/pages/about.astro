@@ -3,21 +3,21 @@ import Layout from "../layouts/Layout.astro"
 ---
 
 <Layout title="About the site">
-  <h1>About the site</h1>
-  <p>
-    This site contains some of my favourite photos that I’ve taken with the
-    Canon mirrorless and DSLR cameras I’ve had over the years.
-  </p>
-  <p>
-    The AVIF image format is used on the site, with a WebP fallback for browsers
-    that don’t support AVIF (namely Microsoft Edge).
-  </p>
-  <p>All photos are © Reupen Shah.</p>
-  <p>
-    The site was built using{" "}
-    <a href="https://astro.build">Astro</a> and is{" "}
-    <a href="https://github.com/reupen/photos.reupen.uk">open source</a>.
-  </p>
+  <div class="section">
+    <div class="container">
+      <h1>About the site</h1>
+      <p>
+        This site contains some of my favourite photos that I’ve taken with the
+        Canon mirrorless and DSLR cameras I’ve had over the years.
+      </p>
+      <p>All photos are © Reupen Shah.</p>
+      <p>
+        The site was built using{" "}
+        <a href="https://astro.build">Astro</a> and is{" "}
+        <a href="https://github.com/reupen/photos.reupen.uk">open source</a>.
+      </p>
 
-  <p><a href="/">Home</a></p>
+      <p><a href="/">Home</a></p>
+    </div>
+  </div>
 </Layout>

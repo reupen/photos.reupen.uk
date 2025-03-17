@@ -6,7 +6,10 @@ import purgecss from "astro-purgecss"
 // https://astro.build/config
 export default defineConfig({
   scopedStyleStrategy: "class",
-  site: "https://photos.reupen.uk",
+  site:
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:4321"
+      : "https://photos.reupen.uk",
   image: {
     service: {
       entrypoint: "./src/utils/imageService",
