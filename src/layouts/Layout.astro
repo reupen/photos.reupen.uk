@@ -1,18 +1,32 @@
 ---
-import "@fontsource-variable/inter"
+import "@fontsource-variable/noto-sans"
 
 import "./font-awesome.scss"
+import "./Layout.pcss"
 
 export interface Props {
   title?: string
   description?: string
   fullWidth?: boolean
+  nextUrl?: string
+  previousUrl?: string
+  returnUrl?: string
+  showTitle?: boolean
 }
 
 const siteTitle = "Reupen’s photos"
 const siteDescription = "Photos I’ve taken"
 const siteAuthor = "Reupen Shah"
-const { title, description, fullWidth, ...rest } = Astro.props
+const {
+  title,
+  description,
+  fullWidth,
+  nextUrl,
+  previousUrl,
+  returnUrl,
+  showTitle,
+  ...rest
+} = Astro.props
 
 const computedDescription = description || siteDescription
 const computedTitle =
@@ -38,92 +52,123 @@ const computedTitle =
     <meta name="twitter:description" content={computedDescription} />
   </head>
   <body data-swipe-threshold="75">
-    <div class={fullWidth ? "container-wide" : "container"}>
-      <main>
-        <slot />
-      </main>
-    </div>
+    {
+      Astro.url.pathname !== "/" && (
+        <header>
+          <nav
+            class:list={[
+              fullWidth && "wide",
+              fullWidth ? "container-wide" : "container",
+            ]}
+          >
+            {<a href={returnUrl || "/"}>Reupen’s photos</a>}
+            {showTitle && <h1 class="small hide-small-and-short">{title}</h1>}
+            {previousUrl && (
+              <a href={previousUrl} class="coloured right small hide-small">
+                <i class="fa-solid fa-chevron-left" />
+                <span class="nav-link-text">
+                  Previous<span class="visually-hidden"> image</span>
+                </span>
+              </a>
+            )}
+            {nextUrl && (
+              <a
+                href={nextUrl}
+                class:list={[
+                  "coloured",
+                  "small",
+                  "hide-small",
+                  !previousUrl && "right",
+                ]}
+              >
+                <span class="nav-link-text">
+                  Next<span class="visually-hidden"> image</span>
+                </span>
+                <i class="fa-solid fa-chevron-right" />
+              </a>
+            )}
+          </nav>
+        </header>
+      )
+    }
+    <main>
+      <slot />
+    </main>
   </body>
 </html>
 
 <style>
-  :root {
-    --body-margin: 1.5rem;
-    --link-color: #ff5a00;
-  }
+  @import "../utils/media-queries.pcss";
 
-  :global(*),
-  :global(*):after,
-  :global(*):before {
-    box-sizing: border-box;
-  }
-
-  :global(body) {
-    margin: max(env(safe-area-inset-top, 0), var(--body-margin))
-      max(env(safe-area-inset-right, 0), var(--body-margin))
-      max(env(safe-area-inset-bottom, 0), var(--body-margin))
-      max(env(safe-area-inset-left, 0), var(--body-margin));
-  }
-
-  :global(html) {
+  header {
+    padding: 0.5rem 0.75rem;
     background: #000;
-    color: #fff;
-    font-family: "Inter Variable", system-ui, sans-serif;
-  }
+    font-size: 20px;
+    font-weight: 500;
+    overflow-x: auto;
 
-  :global(img) {
-    display: block;
-  }
-
-  :global(h1) {
-    font-size: 42px;
-    margin: 2rem 0 1.5rem;
-  }
-
-  :global(h2) {
-    font-size: 32px;
-    margin: 2.5rem 0 1rem;
-  }
-
-  :global(h1, h2) {
-    font-weight: 550;
-  }
-
-  :global(a) {
-    text-decoration: none;
-    font-weight: 450;
-
-    &,
-    :visited {
-      color: var(--link-color);
+    @media (--large) {
+      padding: 0.75rem 1.5rem;
     }
 
-    &:hover {
-      text-decoration: underline;
+    a {
+      &:not(.coloured) {
+        color: var(--nav-text-colour);
+      }
+
+      &:not(:hover) {
+        text-decoration-line: none;
+      }
     }
-  }
 
-  :global(p) {
-    line-height: 1.4;
-  }
+    nav {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      flex-wrap: wrap;
+      text-wrap: nowrap;
 
-  :global(.visually-hidden) {
-    clip: rect(0 0 0 0);
-    clip-path: inset(50%);
-    height: 1px;
-    overflow: hidden;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
-  }
+      &.wide {
+        max-width: calc((var(--large-max-image-height)) * 1.5);
 
-  .container {
-    max-width: 960px;
-    margin: 0 auto;
-  }
+        @media (--short) {
+          max-width: unset;
+        }
+      }
 
-  .container-wide {
-    margin: 0 auto;
+      .right {
+        margin-left: auto;
+      }
+
+      .small {
+        font-size: 16px;
+      }
+
+      .hide-small {
+        display: none;
+
+        @media (--large) {
+          display: initial;
+        }
+
+        @media (--short) {
+          display: initial;
+        }
+      }
+
+      .hide-small-and-short {
+        display: none;
+
+        @media (--large) {
+          display: initial;
+        }
+      }
+
+      & h1 {
+        font-weight: inherit;
+        margin: unset;
+      }
+    }
   }
 
   .flex {

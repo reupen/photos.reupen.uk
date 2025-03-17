@@ -21,47 +21,81 @@ const { page } = Astro.props as {
 const isFirstPage = page.currentPage === 1
 ---
 
+<Layout title={!isFirstPage ? `Page ${page.currentPage}` : undefined}>
+  <div class="page-header section">
+    <div class="container">
+      <h1>
+        {isFirstPage && "Reupen’s photos"}
+        {!isFirstPage && `Page ${page.currentPage}`}
+      </h1>
+      {
+        isFirstPage && (
+          <p>
+            A selection of photos I’ve taken over the years.{" "}
+            <a href="/about/">More about the site.</a>
+          </p>
+        )
+      }
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      {
+        page.data.map((image, imageIndex) => (
+          <div class="month">
+            {(image.isNewMonth || imageIndex === 0) && (
+              <h2>
+                {format(image.data.exif.date, "MMMM yyyy")}
+                {imageIndex === 0 && !image.isNewMonth && " (continued)"}
+              </h2>
+            )}
+            <a id={image.id} href={`/image/${image.id}/`}>
+              <Picture
+                class="home-picture"
+                src={image.data.src}
+                alt={image.data.title}
+                sizes="min(960px, 100vw - 2 * 3rem)"
+              />
+            </a>
+          </div>
+        ))
+      }
+      <Pagination
+        entryName="page"
+        previousHref={page.url.prev}
+        nextHref={page.url.next}
+      />
+    </div>
+  </div>
+</Layout>
+
 <style>
+  h1:first-child {
+    margin-top: 1rem;
+  }
+
+  .month:first-child h2 {
+    margin-top: 0;
+  }
+
   .home-picture :global(img) {
     margin-bottom: 1.25rem;
   }
-</style>
 
-<Layout title={!isFirstPage ? `Page ${page.currentPage}` : undefined}>
-  <h1>
-    Reupen’s photos{!isFirstPage && <> – page {page.currentPage}</>}
-  </h1>
-  {
-    isFirstPage && (
-      <p>
-        Here’s a selection of photos I’ve taken over the years.{" "}
-        <a href="/about/">More about the site.</a>
-      </p>
-    )
+  .page-header {
+    background: var(--nav-background);
+    padding: 0.75rem;
+
+    p {
+      margin: 0 0 1rem;
+
+      @media (--large) {
+        margin-bottom: 1.75rem;
+      }
+    }
+
+    @media (--large) {
+      padding: 1.5rem;
+    }
   }
-  {
-    page.data.map((image, imageIndex) => (
-      <div>
-        {(image.isNewMonth || imageIndex === 0) && (
-          <h2>
-            {format(image.data.exif.date, "MMMM yyyy")}
-            {imageIndex === 0 && !image.isNewMonth && " (continued)"}
-          </h2>
-        )}
-        <a id={image.id} href={`/image/${image.id}/`}>
-          <Picture
-            class="home-picture"
-            src={image.data.src}
-            alt={image.data.title}
-            sizes="min(960px, 100vw - 2 * 3rem)"
-          />
-        </a>
-      </div>
-    ))
-  }
-  <Pagination
-    entryName="page"
-    previousHref={page.url.prev}
-    nextHref={page.url.next}
-  />
-</Layout>
+</style>
