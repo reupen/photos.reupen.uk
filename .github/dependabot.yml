@@ -33,3 +33,10 @@ updates:
         patterns:
           - "postcss*"
           - "cssnano"
+
+  - package-ecosystem: uv
+    directory: /
+    schedule:
+      interval: monthly
+    versioning-strategy: increase
+    open-pull-requests-limit: 5
