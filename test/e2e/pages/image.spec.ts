@@ -58,7 +58,7 @@ test.describe("/empire-state-building-new-york-city/", () => {
   test("can navigate to the index page", async ({ baseURL, page }) => {
     await page.getByRole("link", { name: "Reupen’s photos" }).click()
 
-    await expect(page).toHaveTitle("Page 2 – Reupen’s photos")
-    expect(page.url()).toBe(`${baseURL}/2/#empire-state-building-new-york-city`)
+    await expect(page).toHaveTitle("Reupen’s photos")
+    expect(page.url()).toBe(`${baseURL}/#empire-state-building-new-york-city`)
   })
 })

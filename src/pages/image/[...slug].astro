@@ -27,8 +27,6 @@ const container = await experimental_AstroContainer.create()
 const htmlDescription = await container.renderToString(Content)
 const textDescription = htmlToText(htmlDescription, { wordwrap: false })
 
-const homePageNumber = Math.floor(index / 10) + 1
-const homePagePath = homePageNumber == 1 ? "/" : `/${homePageNumber}/`
 const previousPath = index > 0 ? `/image/${images[index - 1].id}/` : undefined
 const nextPath =
   index + 1 < images.length ? `/image/${images[index + 1].id}/` : undefined
@@ -44,7 +42,7 @@ const nextPath =
   nextUrl={nextPath}
   photo={entry}
   previousUrl={previousPath}
-  returnUrl={`${homePagePath}#${entry.id}`}
+  returnUrl={`/#${entry.id}`}
   fullWidth
   showTitle
   data-previous-path={previousPath}

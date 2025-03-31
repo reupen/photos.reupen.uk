@@ -1,0 +1,89 @@
+---
+import { format } from "date-fns"
+
+import Layout from "../layouts/Layout.astro"
+import { Picture } from "../components"
+import { getImages, type Photo } from "../utils/getImages"
+
+const images = await getImages()
+const groupedImages: Photo[][] = [[]]
+
+images.forEach((image, index) => {
+  const currentGroup = groupedImages.at(-1)
+
+  if (!currentGroup) {
+    throw new Error("Error grouping images")
+  }
+
+  currentGroup.push(image)
+
+  if (images[index + 1]?.isNewMonth) {
+    groupedImages.push([])
+  }
+})
+---
+
+<Layout photo={images[0]}>
+  <div class="page-header section">
+    <div class="container">
+      <h1>Reupen’s photos</h1>
+      <p>
+        A selection of photos I’ve taken over the years.{" "}
+        <a href="/about/">More about the site.</a>
+      </p>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      {
+        groupedImages.map((group) => (
+          <>
+            <h2>{format(group[0].data.exif.date, "MMMM yyyy")}</h2>
+            <div class="grid">
+              {group.map((image) => (
+                <a id={image.id} href={`/image/${image.id}/`}>
+                  <Picture
+                    class="home-picture"
+                    src={image.data.src}
+                    alt={image.data.title}
+                    title={image.data.title}
+                    sizes="325px"
+                  />
+                </a>
+              ))}
+            </div>
+          </>
+        ))
+      }
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(325px, 1fr));
+    gap: 0.2rem;
+  }
+
+  h2:first-child {
+    margin-top: 0;
+  }
+
+  .page-header {
+    background: var(--nav-background);
+    padding: 0.75rem;
+
+    p {
+      margin: 0 0 1rem;
+
+      @media (--large) {
+        margin-bottom: 1.75rem;
+      }
+    }
+
+    @media (--large) {
+      padding: 1.5rem;
+    }
+  }
+</style>

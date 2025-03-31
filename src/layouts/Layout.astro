@@ -103,7 +103,12 @@ const resizedHeight = resizedImage?.attributes.height
             {<a href={returnUrl || "/"}>Reupen’s photos</a>}
             {showTitle && <h1 class="small hide-small-and-short">{title}</h1>}
             {previousUrl && (
-              <a href={previousUrl} class="coloured right small hide-small">
+              <a
+                href={previousUrl}
+                class="coloured right small hide-small"
+                aria-keyshortcuts="ArrowLeft"
+                title="Previous image (←)"
+              >
                 <i class="fa-solid fa-chevron-left" />
                 <span class="nav-link-text">
                   Previous<span class="visually-hidden"> image</span>
@@ -119,6 +124,8 @@ const resizedHeight = resizedImage?.attributes.height
                   "hide-small",
                   !previousUrl && "right",
                 ]}
+                aria-keyshortcuts="ArrowRight"
+                title="Next image (→)"
               >
                 <span class="nav-link-text">
                   Next<span class="visually-hidden"> image</span>

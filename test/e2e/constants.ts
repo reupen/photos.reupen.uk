@@ -1,6 +1,8 @@
 export const PAGES = [
-  { path: "/" },
-  { path: "/2/" },
+  {
+    path: "/",
+    takeViewportScreenshot: true,
+  },
   {
     path: "/image/the-lobby-at-atlantis-the-palm-dubai/",
     takeViewportScreenshot: true,
