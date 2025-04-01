@@ -1,6 +1,6 @@
 import "swiped-events"
 
-const { previousPath, nextPath } = document.documentElement.dataset
+const { previousPath, nextPath, returnPath } = document.documentElement.dataset
 
 const navigatePrevious = () => {
   if (previousPath) {
@@ -14,6 +14,11 @@ const navigateNext = () => {
   }
 }
 
+const navigateUp = () => {
+  if (returnPath) {
+    window.location.href = returnPath
+  }
+}
 const fullscreenPicture = document.getElementById("fullscreen-picture")
 const standalonePicture = document.querySelector<HTMLElement>(
   "#standalone-picture img",
@@ -66,6 +71,9 @@ document.addEventListener("keydown", (event) => {
       break
     case "ArrowRight":
       navigateNext()
+      break
+    case "Escape":
+      navigateUp()
       break
   }
 

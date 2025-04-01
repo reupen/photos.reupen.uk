@@ -55,8 +55,18 @@ test.describe("/empire-state-building-new-york-city/", () => {
     expect(page.url()).toBe(`${baseURL}/image/new-york-city-skyscrapers/`)
   })
 
-  test("can navigate to the index page", async ({ baseURL, page }) => {
+  test("can navigate to the index page by link", async ({ baseURL, page }) => {
     await page.getByRole("link", { name: "Reupen’s photos" }).click()
+
+    await expect(page).toHaveTitle("Reupen’s photos")
+    expect(page.url()).toBe(`${baseURL}/#empire-state-building-new-york-city`)
+  })
+
+  test("can navigate to the index page using Esc", async ({
+    baseURL,
+    page,
+  }) => {
+    await page.keyboard.press("Escape")
 
     await expect(page).toHaveTitle("Reupen’s photos")
     expect(page.url()).toBe(`${baseURL}/#empire-state-building-new-york-city`)

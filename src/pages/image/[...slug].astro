@@ -30,6 +30,7 @@ const textDescription = htmlToText(htmlDescription, { wordwrap: false })
 const previousPath = index > 0 ? `/image/${images[index - 1].id}/` : undefined
 const nextPath =
   index + 1 < images.length ? `/image/${images[index + 1].id}/` : undefined
+const returnPath = `/#${entry.id}`
 ---
 
 <style>
@@ -42,9 +43,10 @@ const nextPath =
   nextUrl={nextPath}
   photo={entry}
   previousUrl={previousPath}
-  returnUrl={`/#${entry.id}`}
+  returnUrl={returnPath}
   fullWidth
   showTitle
+  data-return-path={returnPath}
   data-previous-path={previousPath}
   data-next-path={nextPath}
 >
