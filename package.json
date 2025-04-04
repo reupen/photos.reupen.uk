@@ -59,9 +59,12 @@
     "prettier": "^3.4.2",
     "prettier-plugin-astro": "^0.14.1",
     "purgecss": "^7.0.2",
-    "sharp": "^0.33.4",
+    "sharp": "^0.34.1",
     "shx": "^0.3.4",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.29.0"
+  },
+  "overrides": {
+    "sharp": "$sharp"
   }
 }
