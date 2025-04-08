@@ -56,7 +56,7 @@
     "html-to-text": "^9.0.5",
     "postcss-custom-media": "^11.0.5",
     "postcss-preset-env": "^10.1.5",
-    "prettier": "^3.4.2",
+    "prettier": "^3.5.3",
     "prettier-plugin-astro": "^0.14.1",
     "purgecss": "^7.0.2",
     "sharp": "^0.34.1",
