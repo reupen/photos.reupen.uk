@@ -60,7 +60,7 @@
     "prettier-plugin-astro": "^0.14.1",
     "purgecss": "^7.0.2",
     "sharp": "^0.34.1",
-    "shx": "^0.3.4",
+    "shx": "^0.4.0",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.29.0"
   },
