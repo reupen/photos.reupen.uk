@@ -20,8 +20,8 @@ test.describe("/empire-state-building-new-york-city/", () => {
   }) => {
     await page.getByRole("link", { name: "Previous image" }).click()
 
-    await expect(page).toHaveTitle("Almost full moon – Reupen’s photos")
-    expect(page.url()).toBe(`${baseURL}/image/almost-full-moon/`)
+    await expect(page).toHaveTitle("Waning gibbous moon – Reupen’s photos")
+    expect(page.url()).toBe(`${baseURL}/image/waning-gibbous-moon/`)
   })
 
   test("can navigate to the previous image by left arrow", async ({
@@ -30,8 +30,8 @@ test.describe("/empire-state-building-new-york-city/", () => {
   }) => {
     await page.keyboard.press("ArrowLeft")
 
-    await expect(page).toHaveTitle("Almost full moon – Reupen’s photos")
-    expect(page.url()).toBe(`${baseURL}/image/almost-full-moon/`)
+    await expect(page).toHaveTitle("Waning gibbous moon – Reupen’s photos")
+    expect(page.url()).toBe(`${baseURL}/image/waning-gibbous-moon/`)
   })
 
   test("can navigate to the next image by link", async ({ baseURL, page }) => {
