@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 import argparse
 from pathlib import PurePath
+from platform import system
 from subprocess import run
 
 from utils.npm import get_dependency_version
 
 ROOT_DIR = PurePath(__file__).parents[1].as_posix()
+IS_WIN = system() == "Windows"
 
 parser = argparse.ArgumentParser()
 parser.add_argument("command")
@@ -31,7 +33,7 @@ def run_in_playwright_container(arg):
         "-c",
         arg,
     ]
-    run(command, check=True, shell=True)
+    run(command, check=True, shell=IS_WIN)
 
 
 if __name__ == "__main__":
