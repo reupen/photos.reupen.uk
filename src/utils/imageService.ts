@@ -12,7 +12,7 @@ const service: LocalImageService = {
       transform.format === "webp"
         ? { effort: 6, preset: "photo" }
         : transform.format === "avif"
-          ? { effort: 5 }
+          ? { effort: 5, bitdepth: 12 }
           : {}
 
     const { data, info } = await sharp(inputBuffer)
