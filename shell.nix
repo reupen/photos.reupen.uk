@@ -9,6 +9,7 @@ let
     libheif
     libjpeg
     libjxl
+    libpng
     libwebp
     glib
   ];
@@ -38,7 +39,7 @@ in pkgs.mkShell {
     export PATH="$LOCAL_PREFIX/bin:$PATH"
 
     build_libvips() {
-      meson setup --prefix $LOCAL_PREFIX --libdir lib --buildtype release -Dintrospection=disabled ${libvipsSrc} .vips-build/build/
+      meson setup --reconfigure --prefix $LOCAL_PREFIX --libdir lib --buildtype release -Dintrospection=disabled ${libvipsSrc} .vips-build/build/
       meson compile -C .vips-build/build/
       meson install -C .vips-build/build/
     }

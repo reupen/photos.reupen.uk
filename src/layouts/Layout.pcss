@@ -103,6 +103,22 @@ p {
   width: 1px;
 }
 
+.hdr {
+  display: none;
+}
+
+@media (--hdr) {
+  .hdr-enabled.hdr-browser {
+    .sdr {
+      display: none;
+    }
+
+    .hdr {
+      display: revert;
+    }
+  }
+}
+
 @media print {
   .no-print {
     display: none !important;

@@ -1,5 +1,9 @@
 /// <reference path="../.astro/types.d.ts" />
 
-interface ScreenOrientation extends EventTarget {
-  lock(orientation: OrientationLockType): Promise<void>
+import "user-agent-data-types"
+
+declare global {
+  interface ScreenOrientation extends EventTarget {
+    lock(orientation: OrientationLockType): Promise<void>
+  }
 }

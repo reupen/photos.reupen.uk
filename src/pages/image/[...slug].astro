@@ -5,9 +5,8 @@ import { format } from "date-fns"
 import { convert as htmlToText } from "html-to-text"
 
 import Layout from "../../layouts/Layout.astro"
-import Picture from "../../components/Picture.astro"
 import { getImages } from "../../utils/getImages"
-import Pagination from "../../components/Pagination.astro"
+import { HDRToggle, Pagination, Picture } from "../../components"
 
 export async function getStaticPaths() {
   return (await getImages()).map((entry, index) => ({
@@ -31,9 +30,22 @@ const previousPath = index > 0 ? `/image/${images[index - 1].id}/` : undefined
 const nextPath =
   index + 1 < images.length ? `/image/${images[index + 1].id}/` : undefined
 const returnPath = `/#${entry.id}`
+
+const hdrSrc = entry.data.hdrSrc
+const largeImageWidth = "calc(100vw - 2 * 0.75rem)"
+const imgSizes = `(height < 550px) calc(0.45 * (100vw - 1.5rem) - 1rem),
+${largeImageWidth}`
 ---
 
-<style>
+<style
+  define:vars={{
+    /* eslint-disable astro/no-unused-define-vars-in-style */
+    "large-img-display-width": largeImageWidth,
+    "img-height": entry.data.src.height,
+    "img-width": entry.data.src.width,
+    /* eslint-enable astro/no-unused-define-vars-in-style */
+  }}
+>
   @import "./_[...slug].pcss";
 </style>
 
@@ -53,35 +65,70 @@ const returnPath = `/#${entry.id}`
   <div class="container-wide short-grid content">
     <div class="wrapper">
       <Picture
-        id="fullscreen-picture"
-        class="standalone-fullscreen-picture"
+        id="fullscreen-sdr-picture"
+        class:list={[hdrSrc && "sdr", "standalone-fullscreen-picture"]}
         src={entry.data.src}
         alt={entry.data.title}
         title="Exit fullscreen mode"
+        lazy
       />
       <Picture
-        id="standalone-picture"
-        class="standalone-picture"
+        id="standalone-sdr-picture"
+        class:list={[hdrSrc && "sdr", "standalone-picture"]}
         src={entry.data.src}
         alt={entry.data.title}
+        lazy={Boolean(hdrSrc)}
+        sizes={imgSizes}
       />
+      {
+        hdrSrc && (
+          <>
+            <Picture
+              id="fullscreen-hdr-picture"
+              class="standalone-fullscreen-picture hdr"
+              src={hdrSrc}
+              alt={entry.data.title}
+              title="Exit fullscreen mode"
+              hdr
+              lazy
+            />
+            <Picture
+              id="standalone-hdr-picture"
+              class="standalone-picture hdr"
+              src={hdrSrc}
+              alt={entry.data.title}
+              sizes={imgSizes}
+              hdr
+              lazy
+            />
+          </>
+        )
+      }
     </div>
     <div class="details">
-      <div class="details-left">
-        <div class="details-top-row">
-          <div class="title">
-            <h1 class="title-name">{entry.data.title}</h1>
-          </div>
-          <div class="details-nav">
-            <Pagination
-              class="pagination-image-page"
-              entryName="image"
-              previousHref={previousPath}
-              nextHref={nextPath}
-            />
-          </div>
+      <div class="details-top-row">
+        <div class="title">
+          <h1 class="title-name">{entry.data.title}</h1>
+          {
+            hdrSrc && (
+              <HDRToggle
+                class="hdr-toggle mobile-hdr-toggle"
+                idSuffix="mobile-toggle"
+              />
+            )
+          }
         </div>
-        <dl>
+        <div class="details-nav">
+          <Pagination
+            class="pagination-image-page"
+            entryName="image"
+            previousHref={previousPath}
+            nextHref={nextPath}
+          />
+        </div>
+      </div>
+      <div class="properties-wrapper">
+        <dl class="properties">
           <dt class="visually-hidden">Date taken</dt>
           <dd title="Date taken" class="mobile-margin-bottom">
             <time datetime={entry.data.exif.date.toISOString()}>
@@ -111,8 +158,16 @@ const returnPath = `/#${entry.id}`
             <span aria-hidden="true">ISO</span>{" "}{entry.data.exif.iso}
           </dd>
         </dl>
-        <Content />
+        {
+          hdrSrc && (
+            <HDRToggle
+              class="hdr-toggle desktop-hdr-toggle"
+              idSuffix="desktop-toggle"
+            />
+          )
+        }
       </div>
+      <Content />
     </div>
   </div>
 </Layout>

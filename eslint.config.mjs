@@ -8,7 +8,7 @@ import globals from "globals"
 import tseslint from "typescript-eslint"
 
 export default tseslint.config({
-  ignores: [".astro", "src/env.d.ts"],
+  ignores: [".astro", "dist", "src/env.d.ts"],
   extends: [
     {
       files: ["astro.config.mjs"],
@@ -23,6 +23,15 @@ export default tseslint.config({
     tseslint.configs.stylistic,
     eslintPluginAstro.configs.recommended,
     jsxA11y.flatConfigs.recommended,
+    {
+      settings: {
+        "jsx-a11y": {
+          attributes: {
+            for: ["for"],
+          },
+        },
+      },
+    },
     eslintConfigPrettier,
   ],
 })

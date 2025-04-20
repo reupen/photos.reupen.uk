@@ -18,32 +18,35 @@ const imageCollection = defineCollection({
           exif: "src" in val ? val.src : null,
         }
       },
-      z.object({
-        title: z.string(),
-        exif: z.string().transform(async (val, ctx) => {
-          const exif = await exiftool.read(join("src/photos", val))
+      z
+        .object({
+          title: z.string(),
+          exif: z.string().transform(async (val, ctx) => {
+            const exif = await exiftool.read(join("src/photos", val))
 
-          if (!(exif.DateTimeOriginal instanceof ExifDateTime)) {
-            ctx.addIssue({
-              code: z.ZodIssueCode.custom,
-              message: `Missing date.`,
-            })
+            if (!(exif.DateTimeOriginal instanceof ExifDateTime)) {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: `Missing date.`,
+              })
 
-            return z.NEVER
-          }
+              return z.NEVER
+            }
 
-          return {
-            cameraModel: exif.Model,
-            date: exif.DateTimeOriginal.toDate(),
-            exposureTime: exif.ExposureTime,
-            lensModel: exif.LensModel,
-            iso: exif.ISO,
-            fNumber: exif.FNumber,
-            focalLength: exif.FocalLength,
-          }
-        }),
-        src: image(),
-      }),
+            return {
+              cameraModel: exif.Model,
+              date: exif.DateTimeOriginal.toDate(),
+              exposureTime: exif.ExposureTime,
+              lensModel: exif.LensModel,
+              iso: exif.ISO,
+              fNumber: exif.FNumber,
+              focalLength: exif.FocalLength,
+            }
+          }),
+          hdr_src: image().optional(),
+          src: image(),
+        })
+        .transform(({ hdr_src: hdrSrc, ...rest }) => ({ hdrSrc, ...rest })),
     ),
 })
 

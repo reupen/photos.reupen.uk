@@ -1,6 +1,6 @@
 @import "../../utils/media-queries.pcss";
 
-:root {
+html {
   --mobile-body-bottom-margin: 65px;
   --short-max-content-height: calc(100dvh - 20px - 1.5rem);
   --large-max-image-height: 100vh - 10.5rem;
@@ -44,6 +44,10 @@ dd {
   margin-left: 0;
 }
 
+:global(p) {
+  margin-top: 0.85rem;
+}
+
 .content {
   padding: 0.75rem 0.75rem 0;
 
@@ -59,7 +63,8 @@ dd {
 .short-grid {
   @media (--short) {
     display: grid;
-    grid-template-columns: 45% auto;
+    grid-template-columns: calc(45% - 1rem) auto;
+    column-gap: 1rem;
   }
 }
 
@@ -73,7 +78,7 @@ dd {
 }
 
 .mobile-margin-bottom {
-  margin-bottom: 0.85rem;
+  margin-bottom: 0.8rem;
 
   @media (--large) {
     margin-bottom: 0;
@@ -86,9 +91,31 @@ dd {
   width: auto;
 }
 
+@media not (--large) {
+  .desktop-hdr-toggle {
+    display: none;
+  }
+}
+
+html:not(.hdr-browser) {
+  .hdr-toggle {
+    display: none;
+  }
+}
+
+@media not (--hdr) {
+  .hdr-toggle {
+    display: none;
+  }
+}
+
 .standalone-picture.picture :global(img) {
   height: auto;
   width: auto;
+  min-height: min(
+    var(--large-max-image-height),
+    var(--large-img-display-width) * var(--img-height) / var(--img-width)
+  );
   max-height: var(--large-max-image-height);
   max-width: 100%;
   object-fit: scale-down;
@@ -96,17 +123,21 @@ dd {
   margin: 0 auto 1rem;
 
   @media (--large) {
+    min-height: unset;
     height: calc(var(--large-max-image-height));
   }
 
   @media (--short) {
     margin: 0 0 0;
+    min-height: unset;
     max-height: var(--short-max-content-height);
-    width: calc(100% - 1rem);
+    width: 100%;
   }
 }
 
 .standalone-fullscreen-picture.picture {
+  display: none;
+
   &,
   :global(img) {
     height: 0;
@@ -126,7 +157,6 @@ dd {
 }
 
 .details {
-  display: flex;
   max-width: calc((var(--large-max-image-height)) * 1.5);
   margin: 0 auto;
 
@@ -143,27 +173,31 @@ dd {
   }
 }
 
-.details-left {
-  flex: 1;
-}
-
 .title {
+  display: flex;
   flex: 1;
   font-size: 20px;
-  margin: 0 0 0.85rem;
-}
+  margin: 0;
+  flex-flow: column;
 
-.title-date {
-  font-size: 16px;
+  @media (--short) {
+    flex-flow: row;
+    align-items: baseline;
+  }
 
-  @media (--large) {
-    font-size: 20px;
+  .mobile-hdr-toggle {
+    margin-bottom: 0.6rem;
+
+    @media (--short) {
+      margin-bottom: 0;
+    }
   }
 }
 
 .title-name {
   display: block;
-  margin: 0.5rem 0 0;
+  flex: 1;
+  margin: 0.25rem 0 0.85rem;
   font-size: inherit;
   font-weight: inherit;
 
@@ -175,6 +209,16 @@ dd {
   @media (--short) {
     margin-top: 0;
   }
+}
+
+.properties-wrapper {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.properties {
+  flex: 1;
 }
 
 .f-number::first-letter {

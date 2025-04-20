@@ -3,7 +3,6 @@ import compress from "@playform/compress"
 import sitemap from "@astrojs/sitemap"
 import purgecss from "astro-purgecss"
 
-// https://astro.build/config
 export default defineConfig({
   scopedStyleStrategy: "class",
   site:

@@ -1,0 +1,81 @@
+---
+import clsx from "clsx"
+
+export interface Props {
+  class?: string
+  idSuffix?: string
+}
+
+const { class: className, idSuffix = "", ...rest } = Astro.props
+
+const makeId = (name: string) => [name, idSuffix].join("-")
+
+const hdrName = makeId("hdr-enabled")
+const hdrOnId = makeId("hdr-on")
+const hdrOffId = makeId("hdr-off")
+---
+
+<style>
+  @import "./HDRToggle.pcss";
+</style>
+
+<fieldset class={clsx("hdr-radio-group", className)} {...rest}>
+  <legend class="visually-hidden">HDR</legend>
+  <span aria-hidden="true">HDR</span>
+  <div class="input-wrapper">
+    <input type="radio" id={hdrOnId} name={hdrName} value="on" />
+    <label for={hdrOnId}>On</label>
+    <input type="radio" id={hdrOffId} name={hdrName} value="off" />
+    <label for={hdrOffId}>Off</label>
+  </div>
+</fieldset>
+
+<script define:vars={{ hdrOffId, hdrOnId }} is:inline>
+  const isHdrEnabled = localStorage.getItem("hdr-enabled") !== "off"
+  const hdrOnElement = document.getElementById(hdrOnId)
+  const hdrOffElement = document.getElementById(hdrOffId)
+
+  const handleRadioChange = (event) => {
+    if (!(event.currentTarget instanceof HTMLInputElement)) {
+      return
+    }
+
+    const newValue = event.currentTarget.value
+
+    if (newValue === "on") {
+      document.documentElement.classList.add("hdr-enabled")
+      localStorage.setItem("hdr-enabled", "on")
+      window.dispatchEvent(new CustomEvent("x-hdr-enabled"))
+    } else {
+      document.documentElement.classList.remove("hdr-enabled")
+      localStorage.setItem("hdr-enabled", "off")
+      window.dispatchEvent(new CustomEvent("x-hdr-disabled"))
+    }
+  }
+
+  function initialise() {
+    if (!hdrOnElement || !hdrOffElement) {
+      return
+    }
+
+    if (isHdrEnabled) {
+      document.documentElement.classList.add("hdr-enabled")
+      hdrOnElement.checked = true
+    } else {
+      document.documentElement.classList.remove("hdr-enabled")
+      hdrOffElement.checked = true
+    }
+
+    hdrOnElement.addEventListener("change", handleRadioChange)
+    hdrOffElement.addEventListener("change", handleRadioChange)
+
+    addEventListener("x-hdr-enabled", () => {
+      hdrOnElement.checked = true
+    })
+    addEventListener("x-hdr-disabled", () => {
+      hdrOffElement.checked = true
+    })
+  }
+
+  initialise()
+</script>

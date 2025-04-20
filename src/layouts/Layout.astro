@@ -89,6 +89,21 @@ const resizedHeight = resizedImage?.attributes.height
     />
     <meta name="twitter:creator" content={twitterCreator} />
     <meta name="twitter:title" content={computedTitle} />
+    <script is:inline>
+      const isHdrEnabled = localStorage.getItem("hdr-enabled") !== "off"
+
+      if (isHdrEnabled) {
+        document.documentElement.classList.add("hdr-enabled")
+      }
+
+      const isHdrBrowser = navigator.userAgentData?.brands.some(
+        ({ brand }) => brand === "Chromium",
+      )
+
+      if (isHdrBrowser) {
+        document.documentElement.classList.add("hdr-browser")
+      }
+    </script>
   </head>
   <body data-swipe-threshold="75">
     {
@@ -154,7 +169,7 @@ const resizedHeight = resizedImage?.attributes.height
     overflow-x: auto;
 
     @media (--large) {
-      padding: 0.75rem 1.5rem;
+      padding: 0.75rem;
     }
 
     a {

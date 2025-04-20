@@ -1,0 +1,42 @@
+.hdr-radio-group {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  gap: 0.25rem;
+  border: none;
+  font-size: 0.875rem;
+
+  .input-wrapper {
+    display: inline-flex;
+    background: #2a2a2a;
+    border-radius: 6px;
+    padding: 2px;
+  }
+
+  input[type="radio"] {
+    appearance: none;
+    position: absolute;
+
+    &:checked + label {
+      background: #3a3a3a;
+      color: var(--text-colour);
+    }
+
+    &:focus-visible + label {
+      outline: 2px solid #4a9eff;
+      outline-offset: 2px;
+    }
+  }
+
+  label {
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+    color: #919191;
+    border-radius: 4px;
+
+    &:hover {
+      color: var(--text-colour);
+    }
+  }
+}

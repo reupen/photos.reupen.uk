@@ -19,32 +19,29 @@ const navigateUp = () => {
     window.location.href = returnPath
   }
 }
-const fullscreenPicture = document.getElementById("fullscreen-picture")
-const standalonePicture = document.querySelector<HTMLElement>(
-  "#standalone-picture img",
-)
 
-if (standalonePicture && fullscreenPicture?.requestFullscreen) {
-  standalonePicture.style.cursor = "pointer"
-  standalonePicture.title = "View fullscreen"
-  standalonePicture.addEventListener("click", () => {
-    fullscreenPicture.requestFullscreen().catch(() => undefined)
+function fullscreenify(standaloneId: string, fullscreenId: string) {
+  const fullscreenPicture = document.getElementById(fullscreenId)
+  const standalonePicture = document.querySelector<HTMLElement>(
+    `#${standaloneId} img`,
+  )
+
+  if (standalonePicture && fullscreenPicture?.requestFullscreen) {
+    standalonePicture.style.cursor = "pointer"
+    standalonePicture.title = "View fullscreen"
+    standalonePicture.addEventListener("click", () => {
+      fullscreenPicture.style.display = "block"
+      fullscreenPicture.requestFullscreen().catch(() => undefined)
+    })
+  }
+
+  fullscreenPicture?.addEventListener("click", () => {
+    document.exitFullscreen().catch(() => undefined)
   })
 }
 
-fullscreenPicture?.addEventListener("click", () => {
-  document.exitFullscreen().catch(() => undefined)
-})
-
-const fullScreenButton = document.getElementById("fullscreen-link")
-fullScreenButton?.removeAttribute("hidden")
-
-fullScreenButton?.addEventListener("click", () => {
-  document
-    .getElementById("fullscreen-picture")
-    ?.requestFullscreen()
-    .catch(() => undefined)
-})
+fullscreenify("standalone-sdr-picture", "fullscreen-sdr-picture")
+fullscreenify("standalone-hdr-picture", "fullscreen-hdr-picture")
 
 document.addEventListener("fullscreenchange", () => {
   if (document.fullscreenElement) {

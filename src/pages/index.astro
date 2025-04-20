@@ -4,6 +4,7 @@ import { format } from "date-fns"
 import Layout from "../layouts/Layout.astro"
 import { Picture } from "../components"
 import { getImages, type Photo } from "../utils/getImages"
+import { HDRToggle } from "../components"
 
 const images = await getImages()
 const groupedImages: Photo[][] = [[]]
@@ -24,15 +25,25 @@ images.forEach((image, index) => {
 ---
 
 <Layout photo={images[0]}>
-  <div class="page-header section">
+  <div class="page-header main-header section">
     <div class="container">
       <h1>Reupen’s photos</h1>
       <p>
         A selection of photos I’ve taken over the years.{" "}
         <a href="/about/">More about the site.</a>
       </p>
+      <p>
+        Most images are now available in HDR in Chrome or Edge with a compatible
+        display.
+      </p>
     </div>
   </div>
+  <div class="page-header section hdr-toggle-header hdr-only">
+    <div class="container">
+      <HDRToggle />
+    </div>
+  </div>
+  <div class="page-header header-spacing"></div>
   <div class="section">
     <div class="container">
       {
@@ -43,13 +54,24 @@ images.forEach((image, index) => {
               {group.map((image) => (
                 <a id={image.id} href={`/image/${image.id}/`}>
                   <Picture
-                    class="home-picture"
+                    class:list={[image.data.hdrSrc && "sdr", "home-picture"]}
                     src={image.data.src}
                     alt={image.data.title}
                     title={image.data.title}
                     sizes="325px"
                     lazy
                   />
+                  {image.data.hdrSrc && (
+                    <Picture
+                      class:list={["hdr", "home-picture"]}
+                      src={image.data.hdrSrc}
+                      alt={image.data.title}
+                      title={image.data.title}
+                      sizes="325px"
+                      hdr
+                      lazy
+                    />
+                  )}
                 </a>
               ))}
             </div>
@@ -61,6 +83,8 @@ images.forEach((image, index) => {
 </Layout>
 
 <style>
+  @import "../utils/media-queries.pcss";
+
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(325px, 1fr));
@@ -73,18 +97,55 @@ images.forEach((image, index) => {
 
   .page-header {
     background: var(--nav-background);
-    padding: 0.75rem;
+  }
+
+  .main-header {
+    padding: 0.75rem 0.75rem 0.5rem;
 
     p {
-      margin: 0 0 1rem;
+      margin: 0;
 
-      @media (--large) {
-        margin-bottom: 1.75rem;
+      + p {
+        margin-top: 1rem;
       }
     }
 
     @media (--large) {
-      padding: 1.5rem;
+      padding: 0.75rem 1.5rem 0.5rem;
+    }
+  }
+
+  .hdr-toggle-header {
+    position: sticky;
+    top: 0;
+    padding: 0.5rem 0.75rem 0.5rem;
+
+    @media (--large) {
+      padding: 0.5rem 1.5rem 0.5rem;
+    }
+  }
+
+  .header-spacing {
+    padding: 0 0 0.75rem;
+  }
+
+  html:not(.hdr-browser) {
+    .hdr-only {
+      display: none;
+    }
+
+    .header-spacing {
+      padding-bottom: 1.25rem;
+    }
+  }
+
+  @media not (--hdr) {
+    .hdr-only {
+      display: none;
+    }
+
+    .header-spacing {
+      padding-bottom: 1.25rem;
     }
   }
 </style>
