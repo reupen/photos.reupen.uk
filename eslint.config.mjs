@@ -7,31 +7,31 @@ import jsxA11y from "eslint-plugin-jsx-a11y"
 import globals from "globals"
 import tseslint from "typescript-eslint"
 
-export default tseslint.config({
-  ignores: [".astro", "dist", "src/env.d.ts"],
-  extends: [
-    {
-      files: ["astro.config.mjs"],
-      languageOptions: {
-        globals: {
-          ...globals.node,
+export default tseslint.config(
+  {
+    ignores: [".astro", "dist", "src/env.d.ts"],
+  },
+  {
+    files: ["astro.config.mjs"],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
+  eslint.configs.recommended,
+  tseslint.configs.recommended,
+  tseslint.configs.stylistic,
+  eslintPluginAstro.configs.recommended,
+  {
+    extends: [jsxA11y.flatConfigs.recommended],
+    settings: {
+      "jsx-a11y": {
+        attributes: {
+          for: ["for"],
         },
       },
     },
-    eslint.configs.recommended,
-    tseslint.configs.recommended,
-    tseslint.configs.stylistic,
-    eslintPluginAstro.configs.recommended,
-    jsxA11y.flatConfigs.recommended,
-    {
-      settings: {
-        "jsx-a11y": {
-          attributes: {
-            for: ["for"],
-          },
-        },
-      },
-    },
-    eslintConfigPrettier,
-  ],
-})
+  },
+  eslintConfigPrettier,
+)
