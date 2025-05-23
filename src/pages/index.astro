@@ -5,23 +5,43 @@ import Layout from "../layouts/Layout.astro"
 import { Picture } from "../components"
 import { getImages, type Photo } from "../utils/getImages"
 import { HDRToggle } from "../components"
+import { getImage } from "astro:assets"
+
+interface PhotoWithBackground extends Photo {
+  backgroundImage: Awaited<ReturnType<typeof getImage>> | null
+}
 
 const images = await getImages()
-const groupedImages: Photo[][] = [[]]
+const groupedImages: PhotoWithBackground[][] = [[]]
 
-images.forEach((image, index) => {
+for (const [index, image] of images.entries()) {
   const currentGroup = groupedImages.at(-1)
 
   if (!currentGroup) {
     throw new Error("Error grouping images")
   }
 
-  currentGroup.push(image)
+  const aspectRatio = image.data.src.width / image.data.src.height
+  const getBackgroundImage = () =>
+    getImage({
+      src: image.data.src,
+      width: 24,
+      quality: 50,
+      format: "png",
+      dropMetadata: true,
+    })
+  const backgroundImage =
+    aspectRatio > 3.1 / 2 ? await getBackgroundImage() : null
+
+  currentGroup.push({
+    ...image,
+    backgroundImage,
+  })
 
   if (images[index + 1]?.isNewMonth) {
     groupedImages.push([])
   }
-})
+}
 ---
 
 <Layout photo={images[0]}>
@@ -52,9 +72,22 @@ images.forEach((image, index) => {
             <h2>{format(group[0].data.exif.date, "MMMM yyyy")}</h2>
             <div class="grid">
               {group.map((image) => (
-                <a id={image.id} href={`/image/${image.id}/`}>
+                <a
+                  id={image.id}
+                  href={`/image/${image.id}/`}
+                  class="image-link"
+                  style={
+                    image.backgroundImage && {
+                      backgroundImage: `url(${image.backgroundImage.src})`,
+                    }
+                  }
+                >
                   <Picture
-                    class:list={[image.data.hdrSrc && "sdr", "home-picture"]}
+                    class:list={[
+                      image.data.hdrSrc && "sdr",
+                      image.backgroundImage && "with-background",
+                      "home-picture",
+                    ]}
                     src={image.data.src}
                     alt={image.data.title}
                     title={image.data.title}
@@ -63,7 +96,11 @@ images.forEach((image, index) => {
                   />
                   {image.data.hdrSrc && (
                     <Picture
-                      class:list={["hdr", "home-picture"]}
+                      class:list={[
+                        image.backgroundImage && "with-background",
+                        "hdr",
+                        "home-picture",
+                      ]}
                       src={image.data.hdrSrc}
                       alt={image.data.title}
                       title={image.data.title}
@@ -113,6 +150,16 @@ images.forEach((image, index) => {
     @media (--large) {
       padding: 0.75rem 1.5rem 0.5rem;
     }
+  }
+
+  .image-link {
+    background-size: 100% 100%;
+  }
+
+  .with-background :global(img) {
+    backdrop-filter: blur(30px) brightness(90%);
+    height: 100%;
+    object-fit: contain;
   }
 
   .hdr-toggle-header {

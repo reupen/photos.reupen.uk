@@ -1,6 +1,8 @@
 ---
 import type { AstroBuiltinAttributes, ImageMetadata } from "astro"
+import type { HTMLAttributes } from "astro/types"
 import { getImage } from "astro:assets"
+
 export interface Props extends Pick<AstroBuiltinAttributes, "class:list"> {
   alt: string
   class?: string
@@ -8,6 +10,7 @@ export interface Props extends Pick<AstroBuiltinAttributes, "class:list"> {
   id?: string
   lazy?: boolean
   sizes?: string
+  style?: HTMLAttributes<"img">["style"]
   src: ImageMetadata
   title?: string
 }
@@ -21,6 +24,7 @@ const {
   lazy,
   src,
   sizes,
+  style,
   title,
 } = Astro.props
 
@@ -50,7 +54,7 @@ const fallbackImage = (webpImages ?? avifImages)[0]
 ---
 
 <style>
-  .picture img {
+  .picture :global(img) {
     height: auto;
     width: 100%;
   }
@@ -81,5 +85,6 @@ const fallbackImage = (webpImages ?? avifImages)[0]
     height={src.height}
     alt={alt}
     loading={lazy ? "lazy" : undefined}
+    style={style}
   />
 </picture>

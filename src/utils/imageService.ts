@@ -77,8 +77,11 @@ const service: LocalImageService = {
           ? { effort: 5, bitdepth: 12 }
           : {}
 
-    const { data, info } = await sharp(inputBuffer)
-      .withMetadata()
+    const sharpInstance = transform.dropMetadata
+      ? sharp(inputBuffer)
+      : sharp(inputBuffer).withMetadata()
+
+    const { data, info } = await sharpInstance
       .rotate()
       .resize({ width: transform.width })
       .toFormat(transform.format, {
