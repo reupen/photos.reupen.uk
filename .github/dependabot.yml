@@ -37,6 +37,10 @@ updates:
         patterns:
           - "typescript"
           - "typescript-eslint"
+    ignore:
+      - dependency-name: "@types/node"
+        update-types:
+          - "version-update:semver-major"
 
   - package-ecosystem: uv
     directory: /
