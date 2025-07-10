@@ -27,6 +27,7 @@ updates:
           - "astro-purgecss"
       eslint:
         patterns:
+          - "@eslint/*"
           - "eslint"
           - "eslint-*"
       postcss:
