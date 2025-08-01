@@ -34,7 +34,7 @@ const { class: class_, nextHref, previousHref, entryName } = Astro.props
     {
       previousHref && (
         <a href={previousHref}>
-          <i class="fa-solid fa-chevron-left" />
+          <i class="fa-solid fa-chevron-left fa-width-auto" />
           <span>
             Previous<span class="visually-hidden"> {entryName}</span>
           </span>
@@ -49,7 +49,7 @@ const { class: class_, nextHref, previousHref, entryName } = Astro.props
           <span>
             Next<span class="visually-hidden"> {entryName}</span>
           </span>
-          <i class="fa-solid fa-chevron-right" />
+          <i class="fa-solid fa-chevron-right fa-width-auto" />
         </a>
       )
     }
