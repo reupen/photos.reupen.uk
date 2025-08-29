@@ -180,11 +180,9 @@ jobs:
         run: tar -xzf /tmp/site.tar.gz
 
       - name: Publish to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: a15c47006c45966652a70d01bf3629a5
-          projectName: photos-reupen-uk
-          directory: dist/
+          command: pages deploy dist/ --project-name=photos-reupen-uk
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          wranglerVersion: "3"
