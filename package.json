@@ -28,10 +28,10 @@
     "test:update": "python scripts/run_in_playwright_container.py \"npm ci && npm exec --no -- playwright test --update-snapshots\""
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.4.2",
+    "@astrojs/sitemap": "^3.5.1",
     "@fontsource-variable/noto-sans": "^5.2.7",
     "@fortawesome/fontawesome-free": "^7.0.0",
-    "astro": "^5.13.2",
+    "astro": "^5.13.5",
     "date-fns": "^4.1.0",
     "sass": "^1.89.2",
     "swiped-events": "^1.2.0"
