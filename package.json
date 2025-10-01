@@ -59,7 +59,7 @@
     "node-addon-api": "^8.4.0",
     "node-gyp": "^11.4.2",
     "postcss-custom-media": "^11.0.6",
-    "postcss-preset-env": "^10.3.1",
+    "postcss-preset-env": "^10.4.0",
     "prettier": "^3.6.2",
     "prettier-plugin-astro": "^0.14.1",
     "purgecss": "^7.0.2",
