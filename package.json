@@ -63,6 +63,7 @@
     "prettier": "^3.6.2",
     "prettier-plugin-astro": "^0.14.1",
     "purgecss": "^7.0.2",
+    "schema-dts": "^1.1.5",
     "sharp": "^0.34.1",
     "shx": "^0.4.0",
     "typescript": "^5.9.3",

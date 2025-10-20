@@ -58,6 +58,19 @@ ${largeImageWidth}`
   returnUrl={returnPath}
   fullWidth
   showTitle
+  structuredData={{
+    "@context": "https://schema.org",
+    "@type": "ImageObject",
+    contentUrl: new URL(entry.data.src.src, Astro.site).toString(),
+    creator: {
+      "@type": "Person",
+      name: "Reupen Shah",
+      url: "https://reupen.uk",
+    },
+    copyrightNotice: "Reupen Shah",
+    dateCreated: entry.data.exif.date.toISOString(),
+    headline: entry.data.title,
+  }}
   data-return-path={returnPath}
   data-previous-path={previousPath}
   data-next-path={nextPath}

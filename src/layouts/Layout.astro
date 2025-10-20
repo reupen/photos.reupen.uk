@@ -1,6 +1,7 @@
 ---
 import "@fontsource-variable/noto-sans/wght.css"
 import "@fontsource-variable/noto-sans/wght-italic.css"
+import type { ImageObject, WithContext } from "schema-dts"
 
 import type { Photo } from "../utils/getImages"
 import "./font-awesome.scss"
@@ -16,6 +17,7 @@ export interface Props {
   previousUrl?: string
   returnUrl?: string
   showTitle?: boolean
+  structuredData?: WithContext<ImageObject>
 }
 
 const siteTitle = "Reupen’s photos"
@@ -30,6 +32,7 @@ const {
   previousUrl,
   returnUrl,
   showTitle,
+  structuredData,
   ...rest
 } = Astro.props
 
@@ -104,6 +107,15 @@ const resizedHeight = resizedImage?.attributes.height
         document.documentElement.classList.add("hdr-browser")
       }
     </script>
+    {
+      structuredData && (
+        <script
+          is:inline
+          set:html={JSON.stringify(structuredData)}
+          type="application/ld+json"
+        />
+      )
+    }
   </head>
   <body data-swipe-threshold="75">
     {
