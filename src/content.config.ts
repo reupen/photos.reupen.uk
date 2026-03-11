@@ -1,5 +1,6 @@
-import { defineCollection, z } from "astro:content"
+import { defineCollection } from "astro:content"
 import { glob } from "astro/loaders"
+import { z } from "astro/zod"
 import { ExifDateTime, exiftool } from "exiftool-vendored"
 import { join } from "node:path"
 
@@ -26,7 +27,7 @@ const imageCollection = defineCollection({
 
             if (!(exif.DateTimeOriginal instanceof ExifDateTime)) {
               ctx.addIssue({
-                code: z.ZodIssueCode.custom,
+                code: "custom",
                 message: `Missing date.`,
               })
 
