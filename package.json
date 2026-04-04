@@ -66,12 +66,13 @@
     "schema-dts": "^1.1.5",
     "sharp": "^0.34.5",
     "shx": "^0.4.0",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.56.1",
+    "typescript": "^6.0.2",
+    "typescript-eslint": "^8.58.0",
     "user-agent-data-types": "^0.4.2"
   },
   "overrides": {
     "astro": "$astro",
-    "sharp": "$sharp"
+    "sharp": "$sharp",
+    "typescript": "$typescript"
   }
 }
