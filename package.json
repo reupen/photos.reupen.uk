@@ -31,7 +31,7 @@
     "@astrojs/sitemap": "^3.7.2",
     "@fontsource-variable/noto-sans": "^5.2.10",
     "@fortawesome/fontawesome-free": "^7.2.0",
-    "astro": "^6.1.2",
+    "astro": "^6.1.8",
     "date-fns": "^4.1.0",
     "sass": "^1.97.3",
     "swiped-events": "^1.2.0"
@@ -46,7 +46,7 @@
     "@types/eslint-plugin-jsx-a11y": "^6.10.1",
     "@types/html-to-text": "^9.0.4",
     "@types/node": "^22.19.11",
-    "astro-purgecss": "^5.3.0",
+    "astro-purgecss": "^6.0.1",
     "clsx": "^2.1.1",
     "cssnano": "^7.1.4",
     "eslint": "^9.39.2",
