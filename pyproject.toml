@@ -3,7 +3,7 @@ name = "photos-reupen-uk"
 version = "0.1.0"
 requires-python = ">=3.13"
 dependencies = [
-    "ruff>=0.7.1",
+    "ruff>=0.15.12",
 ]
 
 [tool.ruff.lint]
