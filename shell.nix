@@ -2,8 +2,9 @@
 
 pkgs.mkShell {
   nativeBuildInputs = with pkgs; [
-      gcc
+      nodejs_22
       pkg-config
+      stdenv.cc
       vips
   ];
 }
