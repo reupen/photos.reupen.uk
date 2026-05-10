@@ -1,11 +1,11 @@
 ---
+import { getImage } from "astro:assets"
 import { format } from "date-fns"
 
-import Layout from "../layouts/Layout.astro"
 import { Picture } from "../components"
-import { getImages, type Photo } from "../utils/getImages"
 import { HDRToggle } from "../components"
-import { getImage } from "astro:assets"
+import Layout from "../layouts/Layout.astro"
+import { getImages, type Photo } from "../utils/getImages"
 
 interface PhotoWithBackground extends Photo {
   backgroundImage: Awaited<ReturnType<typeof getImage>> | null
@@ -74,8 +74,8 @@ for (const [index, image] of images.entries()) {
               {group.map((image) => (
                 <a
                   id={image.id}
-                  href={`/image/${image.id}/`}
                   class="image-link"
+                  href={`/image/${image.id}/`}
                   style={
                     image.backgroundImage && {
                       backgroundImage: `url(${image.backgroundImage.src})`,
@@ -83,28 +83,28 @@ for (const [index, image] of images.entries()) {
                   }
                 >
                   <Picture
+                    src={image.data.src}
+                    alt={image.data.title}
                     class:list={[
                       image.data.hdrSrc && "sdr",
                       image.backgroundImage && "with-background",
                       "home-picture",
                     ]}
-                    src={image.data.src}
-                    alt={image.data.title}
-                    title={image.data.title}
                     sizes="325px"
+                    title={image.data.title}
                     lazy
                   />
                   {image.data.hdrSrc && (
                     <Picture
+                      src={image.data.hdrSrc}
+                      alt={image.data.title}
                       class:list={[
                         image.backgroundImage && "with-background",
                         "hdr",
                         "home-picture",
                       ]}
-                      src={image.data.hdrSrc}
-                      alt={image.data.title}
-                      title={image.data.title}
                       sizes="325px"
+                      title={image.data.title}
                       hdr
                       lazy
                     />

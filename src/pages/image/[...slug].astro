@@ -1,12 +1,12 @@
 ---
-import { render } from "astro:content"
 import { experimental_AstroContainer } from "astro/container"
+import { render } from "astro:content"
 import { format } from "date-fns"
 import { convert as htmlToText } from "html-to-text"
 
+import { HDRToggle, Pagination, Picture } from "../../components"
 import Layout from "../../layouts/Layout.astro"
 import { getImages } from "../../utils/getImages"
-import { HDRToggle, Pagination, Picture } from "../../components"
 
 export async function getStaticPaths() {
   return (await getImages()).map((entry, index) => ({
@@ -50,14 +50,14 @@ ${largeImageWidth}`
 </style>
 
 <Layout
+  data-next-path={nextPath}
+  data-previous-path={previousPath}
+  data-return-path={returnPath}
   description={textDescription}
-  title={entry.data.title}
   nextUrl={nextPath}
   photo={entry}
   previousUrl={previousPath}
   returnUrl={returnPath}
-  fullWidth
-  showTitle
   structuredData={{
     "@context": "https://schema.org",
     "@type": "ImageObject",
@@ -71,25 +71,25 @@ ${largeImageWidth}`
     dateCreated: entry.data.exif.date.toISOString(),
     headline: entry.data.title,
   }}
-  data-return-path={returnPath}
-  data-previous-path={previousPath}
-  data-next-path={nextPath}
+  title={entry.data.title}
+  fullWidth
+  showTitle
 >
   <div class="container-wide short-grid content">
     <div class="wrapper">
       <Picture
         id="fullscreen-sdr-picture"
-        class:list={[hdrSrc && "sdr", "standalone-fullscreen-picture"]}
         src={entry.data.src}
         alt={entry.data.title}
+        class:list={[hdrSrc && "sdr", "standalone-fullscreen-picture"]}
         title="Exit fullscreen mode"
         lazy
       />
       <Picture
         id="standalone-sdr-picture"
-        class:list={[hdrSrc && "sdr", "standalone-picture"]}
         src={entry.data.src}
         alt={entry.data.title}
+        class:list={[hdrSrc && "sdr", "standalone-picture"]}
         lazy={Boolean(hdrSrc)}
         sizes={imgSizes}
       />
@@ -98,18 +98,18 @@ ${largeImageWidth}`
           <>
             <Picture
               id="fullscreen-hdr-picture"
-              class="standalone-fullscreen-picture hdr"
               src={hdrSrc}
               alt={entry.data.title}
+              class="standalone-fullscreen-picture hdr"
               title="Exit fullscreen mode"
               hdr
               lazy
             />
             <Picture
               id="standalone-hdr-picture"
-              class="standalone-picture hdr"
               src={hdrSrc}
               alt={entry.data.title}
+              class="standalone-picture hdr"
               sizes={imgSizes}
               hdr
               lazy
@@ -135,15 +135,15 @@ ${largeImageWidth}`
           <Pagination
             class="pagination-image-page"
             entryName="image"
-            previousHref={previousPath}
             nextHref={nextPath}
+            previousHref={previousPath}
           />
         </div>
       </div>
       <div class="properties-wrapper">
         <dl class="properties">
           <dt class="visually-hidden">Date taken</dt>
-          <dd title="Date taken" class="mobile-margin-bottom">
+          <dd class="mobile-margin-bottom" title="Date taken">
             <time datetime={entry.data.exif.date.toISOString()}>
               {format(entry.data.exif.date, "d MMMM yyyy")}
             </time>
@@ -163,7 +163,7 @@ ${largeImageWidth}`
             {entry.data.exif.focalLength?.replace(" ", "")}
           </dd>
           <dt class="visually-hidden">f-number</dt>
-          <dd title="f-number" class="f-number">ƒ/{entry.data.exif.fNumber}</dd>
+          <dd class="f-number" title="f-number">ƒ/{entry.data.exif.fNumber}</dd>
           <dt class="visually-hidden">Exposure time</dt>
           <dd title="Exposure time">{entry.data.exif.exposureTime}s</dd>
           <dt class="visually-hidden">ISO</dt>

@@ -23,14 +23,14 @@ const hdrOffId = makeId("hdr-off")
   <legend class="visually-hidden">HDR</legend>
   <span aria-hidden="true">HDR</span>
   <div class="input-wrapper">
-    <input type="radio" id={hdrOnId} name={hdrName} value="on" />
+    <input id={hdrOnId} name={hdrName} type="radio" value="on" />
     <label for={hdrOnId}>On</label>
-    <input type="radio" id={hdrOffId} name={hdrName} value="off" />
+    <input id={hdrOffId} name={hdrName} type="radio" value="off" />
     <label for={hdrOffId}>Off</label>
   </div>
 </fieldset>
 
-<script define:vars={{ hdrOffId, hdrOnId }} is:inline>
+<script is:inline define:vars={{ hdrOffId, hdrOnId }}>
   const isHdrEnabled = localStorage.getItem("hdr-enabled") !== "off"
   const hdrOnElement = document.getElementById(hdrOnId)
   const hdrOffElement = document.getElementById(hdrOffId)
