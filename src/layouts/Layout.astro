@@ -1,15 +1,14 @@
 ---
 import "@fontsource-variable/noto-sans/wght.css"
 import "@fontsource-variable/noto-sans/wght-italic.css"
-import type { ImageObject, WithContext } from "schema-dts"
-
 import type { Photo } from "../utils/getImages"
-import "./font-awesome.scss"
-import "./Layout.pcss"
 import { getImage } from "astro:assets"
 
+import "./font-awesome.scss"
+import "./Layout.pcss"
+import type { ImageObject, WithContext } from "schema-dts"
+
 export interface Props {
-  title?: string
   description?: string
   fullWidth?: boolean
   nextUrl?: string
@@ -18,6 +17,7 @@ export interface Props {
   returnUrl?: string
   showTitle?: boolean
   structuredData?: WithContext<ImageObject>
+  title?: string
 }
 
 const siteTitle = "Reupen’s photos"
@@ -57,8 +57,8 @@ const resizedHeight = resizedImage?.attributes.height
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
+    <link href="/sitemap-index.xml" rel="sitemap" />
     <title>{computedTitle}</title>
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={computedDescription} />
@@ -131,9 +131,9 @@ const resizedHeight = resizedImage?.attributes.height
             {showTitle && <h1 class="small hide-small-and-short">{title}</h1>}
             {previousUrl && (
               <a
-                href={previousUrl}
-                class="coloured right small hide-small"
                 aria-keyshortcuts="ArrowLeft"
+                class="coloured right small hide-small"
+                href={previousUrl}
                 title="Previous image (←)"
               >
                 <i class="fa-solid fa-chevron-left fa-width-auto" />
@@ -144,14 +144,14 @@ const resizedHeight = resizedImage?.attributes.height
             )}
             {nextUrl && (
               <a
-                href={nextUrl}
+                aria-keyshortcuts="ArrowRight"
                 class:list={[
                   "coloured",
                   "small",
                   "hide-small",
                   !previousUrl && "right",
                 ]}
-                aria-keyshortcuts="ArrowRight"
+                href={nextUrl}
                 title="Next image (→)"
               >
                 <span class="nav-link-text">

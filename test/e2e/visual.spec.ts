@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test"
+
 import { PAGES } from "./constants.ts"
 
 PAGES.forEach(({ path, takeViewportScreenshot }) => {

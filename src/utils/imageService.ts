@@ -1,7 +1,6 @@
-import { spawn } from "node:child_process"
-
 import type { LocalImageService } from "astro"
 import { baseService } from "astro/assets"
+import { spawn } from "node:child_process"
 import sharp from "sharp"
 
 type LocalImageTransform = Parameters<LocalImageService["transform"]>[1]

@@ -10,8 +10,8 @@ export interface Props extends Pick<AstroBuiltinAttributes, "class:list"> {
   id?: string
   lazy?: boolean
   sizes?: string
-  style?: HTMLAttributes<"img">["style"]
   src: ImageMetadata
+  style?: HTMLAttributes<"img">["style"]
   title?: string
 }
 
@@ -60,31 +60,31 @@ const fallbackImage = (webpImages ?? avifImages)[0]
   }
 </style>
 
-<picture class:list={["picture", classList, class_]} id={id} title={title}>
+<picture id={id} class:list={["picture", classList, class_]} title={title}>
   <source
+    height={src.height}
+    sizes={sizes}
     srcset={makeSrcset(avifImages)}
     type="image/avif"
     width={src.width}
-    height={src.height}
-    sizes={sizes}
   />
   {
     webpImages && (
       <source
+        height={src.height}
+        sizes={sizes}
         srcset={makeSrcset(webpImages)}
         type="image/webp"
         width={src.width}
-        height={src.height}
-        sizes={sizes}
       />
     )
   }
   <img
     src={fallbackImage.src}
-    width={src.width}
-    height={src.height}
     alt={alt}
+    height={src.height}
     loading={lazy ? "lazy" : undefined}
     style={style}
+    width={src.width}
   />
 </picture>
