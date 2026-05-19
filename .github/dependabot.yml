@@ -5,6 +5,8 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 3
     groups:
       actions:
         patterns:
@@ -16,6 +18,8 @@ updates:
       interval: monthly
       time: "00:00"
     versioning-strategy: increase
+    cooldown:
+      default-days: 3
     open-pull-requests-limit: 5
     groups:
       astro:
@@ -49,4 +53,6 @@ updates:
       interval: monthly
       time: "04:00"
     versioning-strategy: increase
+    cooldown:
+      default-days: 3
     open-pull-requests-limit: 5
