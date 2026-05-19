@@ -174,7 +174,7 @@ jobs:
         run: tar -xzf /tmp/site.tar.gz
 
       - name: Publish to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: a15c47006c45966652a70d01bf3629a5
