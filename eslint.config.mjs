@@ -19,7 +19,21 @@ export default defineConfig(
     },
   },
   eslint.configs.recommended,
-  tseslint.configs.recommended,
+  {
+    extends: tseslint.configs.recommended,
+    rules: {
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          args: "all",
+          argsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_",
+          destructuredArrayIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+        },
+      ],
+    },
+  },
   tseslint.configs.stylistic,
   eslintPluginAstro.configs.recommended,
   {

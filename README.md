@@ -14,34 +14,32 @@ files.
 
 ## Building the site
 
-Linux is required to build the site, due to the use of a custom build of
-[libvips](https://github.com/libvips/libvips/) with
-[sharp](https://github.com/lovell/sharp).
+A recent version of [libvips](https://github.com/libvips/libvips/) (including
+the `vips` binary) is required. This can be installed, for example, using
+[Pixi](https://pixi.prefix.dev/latest/). Unfortunately, Windows is unlikely to
+work as `vips.exe` appears to have problems accepting AVIF files via standard
+input there.
 
-To build the site:
+To build the site (on Linux):
 
 1. Install [Node.js](https://nodejs.org/en/)
 2. Install [Python](https://www.python.org/)
-3. Install [Nix](https://nixos.org/download/)
-4. Start a Nix shell:
-
-   ```shell
-   nix-shell
-   ```
-
-5. Install JavaScript dependencies:
+3. Install libvips, for example
+   [as a global tool](https://pixi.prefix.dev/latest/global_tools/introduction/)
+   using [Pixi](https://pixi.prefix.dev/latest/).
+4. Install JavaScript dependencies:
 
    ```shell
    npm install
    ```
 
-6. Build the site:
+5. Build the site:
 
    ```shell
    npm run build
    ```
 
-7. Run the preview server:
+6. Run the preview server:
 
    ```shell
    npm run preview

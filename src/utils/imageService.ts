@@ -1,6 +1,7 @@
 import type { LocalImageService } from "astro"
 import { baseService } from "astro/assets"
 import { spawn } from "node:child_process"
+import { platform } from "node:os"
 import sharp from "sharp"
 
 type LocalImageTransform = Parameters<LocalImageService["transform"]>[1]
@@ -20,12 +21,18 @@ async function hdrTranscode(
   return new Promise((resolve, reject) => {
     const chunks: Buffer[] = []
 
-    const vips = spawn("vips", [
-      "resize",
-      "stdin",
-      `.avif[Q=${parseInt(transform.quality)},bitdepth=12]`,
-      `${scaleFactor}`,
-    ])
+    const { VIPSHOME: _, ...envWithoutVipsHome } = process.env
+
+    const vips = spawn(
+      platform() === "win32" ? "vips.exe" : "vips",
+      [
+        "resize",
+        "stdin",
+        `.avif[Q=${parseInt(transform.quality)},bitdepth=12]`,
+        `${scaleFactor}`,
+      ],
+      { env: envWithoutVipsHome, stdio: ["pipe", "pipe", "inherit"] },
+    )
 
     vips.stdout?.on("data", (chunk: Buffer) => {
       chunks.push(chunk)
