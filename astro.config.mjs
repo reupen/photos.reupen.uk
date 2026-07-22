@@ -1,6 +1,5 @@
 import sitemap from "@astrojs/sitemap"
 import compress from "@playform/compress"
-import purgecss from "astro-purgecss"
 import { defineConfig } from "astro/config"
 
 export default defineConfig({
@@ -16,7 +15,6 @@ export default defineConfig({
   },
   integrations: [
     sitemap(),
-    purgecss(),
     compress({
       CSS: false,
       HTML: false,
