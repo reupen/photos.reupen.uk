@@ -61,8 +61,8 @@
     "schema-dts": "^1.1.5",
     "sharp": "^0.35.1",
     "shx": "^0.4.0",
-    "typescript": "^6.0.3",
-    "typescript-eslint": "^8.62.0",
+    "typescript": "^7.0.2",
+    "typescript-eslint": "^8.65.0",
     "user-agent-data-types": "^0.4.2"
   },
   "overrides": {
