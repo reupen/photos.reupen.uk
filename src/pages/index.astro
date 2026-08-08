@@ -38,7 +38,7 @@ for (const [index, image] of images.entries()) {
     backgroundImage,
   })
 
-  if (images[index + 1]?.isNewMonth) {
+  if (images[index + 1]?.isNewYear) {
     groupedImages.push([])
   }
 }
@@ -69,7 +69,7 @@ for (const [index, image] of images.entries()) {
       {
         groupedImages.map((group) => (
           <>
-            <h2>{format(group[0].data.exif.date, "MMMM yyyy")}</h2>
+            <h2>{format(group[0].data.exif.date, "yyyy")}</h2>
             <div class="grid">
               {group.map((image) => (
                 <a
