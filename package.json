@@ -62,7 +62,7 @@
     "sharp": "^0.35.4",
     "shx": "^0.4.0",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.62.0",
+    "typescript-eslint": "^8.71.0",
     "user-agent-data-types": "^0.4.2"
   },
   "overrides": {
