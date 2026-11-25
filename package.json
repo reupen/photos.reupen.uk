@@ -19,14 +19,14 @@
     "dev": "astro dev",
     "format:check": "prettier -c .",
     "lint": "eslint --max-warnings 0 .",
-    "lint:fix": "npm run lint -- --fix",
+    "lint:fix": "pnpm run lint --fix",
     "preview": "astro preview",
     "start": "astro dev",
-    "pretest": "npm run build",
-    "test": "python scripts/run_in_playwright_container.py \"npm ci && npm exec --no -- playwright test\"",
+    "pretest": "pnpm run build",
+    "test": "python scripts/run_in_playwright_container.py \"npm install -g pnpm && pnpm ci && pnpm exec -- playwright test\"",
     "test:report": "playwright show-report test/e2e/output/html",
-    "pretest:update": "npm run build",
-    "test:update": "python scripts/run_in_playwright_container.py \"npm ci && npm exec --no -- playwright test --update-snapshots\""
+    "pretest:update": "pnpm run build",
+    "test:update": "python scripts/run_in_playwright_container.py \"npm install -g pnpm && pnpm ci && pnpm exec -- playwright test --update-snapshots\""
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.5",
@@ -59,15 +59,16 @@
     "prettier": "^3.8.1",
     "prettier-plugin-astro": "^0.14.1",
     "schema-dts": "^2.1.0",
-    "sharp": "^0.35.5",
+    "sharp": "catalog:",
     "shx": "^0.4.0",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.72.1",
     "user-agent-data-types": "^0.4.2"
   },
-  "overrides": {
-    "astro": "$astro",
-    "sharp": "$sharp",
-    "typescript": "$typescript"
-  }
-}
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^12",
+      "onFail": "download"
+    }
+  }}

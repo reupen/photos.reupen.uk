@@ -1,0 +1,8 @@
+allowBuilds:
+  "@parcel/watcher": false
+
+catalog:
+  sharp: ^0.35.5
+
+overrides:
+  sharp: "catalog:"

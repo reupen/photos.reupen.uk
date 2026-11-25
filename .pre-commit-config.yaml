@@ -6,6 +6,8 @@ ci:
     - ruff-check
     - ruff-format
 
+exclude: ^pnpm-lock.yaml$
+
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
@@ -18,17 +20,17 @@ repos:
     hooks:
       - id: prettier
         name: prettier
-        entry: npm exec --no -- prettier --write --ignore-unknown
+        entry: pnpm exec -- prettier --write --ignore-unknown
         language: system
         types: [text]
       - id: eslint
         name: eslint
-        entry: npm exec --no -- eslint --fix --max-warnings 0 --no-warn-ignored
+        entry: pnpm exec -- eslint --fix --max-warnings 0 --no-warn-ignored
         language: system
         files: \.(([cm]?(j|t)s)|astro|mdx)$
       - id: astro-check
         name: astro check
-        entry: npm exec --no -- astro check --minimumFailingSeverity hint
+        entry: pnpm exec -- astro check --minimumFailingSeverity hint
         language: system
         pass_filenames: false
       - id: ruff-check
