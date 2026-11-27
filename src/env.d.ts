@@ -6,4 +6,10 @@ declare global {
   interface ScreenOrientation extends EventTarget {
     lock(orientation: OrientationLockType): Promise<void>
   }
+
+  namespace Astro {
+    interface CustomImageProps {
+      isHDR?: boolean
+    }
+  }
 }

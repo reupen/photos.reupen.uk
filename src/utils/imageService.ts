@@ -2,6 +2,7 @@ import type { LocalImageService } from "astro"
 import { baseService } from "astro/assets"
 import { spawn } from "node:child_process"
 import { platform } from "node:os"
+import queryString from "query-string"
 import sharp from "sharp"
 
 type LocalImageTransform = Parameters<LocalImageService["transform"]>[1]
@@ -63,9 +64,35 @@ async function hdrTranscode(
 
 const service: LocalImageService = {
   getHTMLAttributes: baseService.getHTMLAttributes,
-  getURL: baseService.getURL,
-  parseURL: baseService.parseURL,
   validateOptions: baseService.validateOptions,
+  propertiesToHash: [...(baseService.propertiesToHash ?? []), "isHDR"],
+  async getURL(options, imageConfig, logger) {
+    const url = await baseService.getURL(options, imageConfig, logger)
+
+    if (!url) {
+      return url
+    }
+
+    const { query, ...parsedRest } = queryString.parseUrl(url, {
+      parseFragmentIdentifier: true,
+    })
+
+    if (options.isHDR && query.href) {
+      return queryString.stringifyUrl({
+        ...parsedRest,
+        query: { ...query, hdr: "1" },
+      })
+    }
+
+    return url
+  },
+  parseURL(url, imageConfig, logger) {
+    const transform = baseService.parseURL(url, imageConfig, logger)
+
+    if (transform === undefined) return undefined
+
+    return { ...transform, isHDR: url.searchParams.get("hdr") === "1" }
+  },
   async transform(inputBuffer, transform) {
     if (transform.isHDR) {
       const data = await hdrTranscode(inputBuffer, transform)
