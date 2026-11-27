@@ -14,33 +14,24 @@ files.
 
 ## Building the site
 
-A recent version of [libvips](https://github.com/libvips/libvips/) (including
-the `vips` binary) is required. This can be installed, for example, using
-[Pixi](https://pixi.prefix.dev/latest/). Unfortunately, Windows is unlikely to
-work as `vips.exe` appears to have problems accepting AVIF files via standard
-input there.
-
-To build the site (on Linux):
+To build the site:
 
 1. Install [Node.js](https://nodejs.org/en/)
 2. Install [pnpm](https://pnpm.io/installation)
 3. Install [Python](https://www.python.org/)
-4. Install libvips, for example
-   [as a global tool](https://pixi.prefix.dev/latest/global_tools/introduction/)
-   using [Pixi](https://pixi.prefix.dev/latest/).
-5. Install JavaScript dependencies:
+4. Install JavaScript dependencies:
 
    ```shell
    pnpm install
    ```
 
-6. Build the site:
+5. Build the site:
 
    ```shell
    pnpm run build
    ```
 
-7. Run the preview server:
+6. Run the preview server:
 
    ```shell
    pnpm run preview
