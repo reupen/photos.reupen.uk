@@ -9,6 +9,7 @@ declare global {
 
   namespace Astro {
     interface CustomImageProps {
+      dropMetadata?: boolean
       isHDR?: boolean
     }
   }

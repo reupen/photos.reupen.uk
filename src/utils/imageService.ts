@@ -6,7 +6,11 @@ import sharp from "sharp"
 const service: LocalImageService = {
   getHTMLAttributes: baseService.getHTMLAttributes,
   validateOptions: baseService.validateOptions,
-  propertiesToHash: [...(baseService.propertiesToHash ?? []), "isHDR"],
+  propertiesToHash: [
+    ...(baseService.propertiesToHash ?? []),
+    "isHDR",
+    "dropMetadata",
+  ],
   async getURL(options, imageConfig, logger) {
     const url = await baseService.getURL(options, imageConfig, logger)
 
@@ -18,10 +22,14 @@ const service: LocalImageService = {
       parseFragmentIdentifier: true,
     })
 
-    if (options.isHDR && query.href) {
+    if ((options.isHDR || options.dropMetadata) && query.href) {
       return queryString.stringifyUrl({
         ...parsedRest,
-        query: { ...query, hdr: "1" },
+        query: {
+          ...query,
+          dm: options.dropMetadata && "1",
+          hdr: options.isHDR && "1",
+        },
       })
     }
 
@@ -32,7 +40,11 @@ const service: LocalImageService = {
 
     if (transform === undefined) return undefined
 
-    return { ...transform, isHDR: url.searchParams.get("hdr") === "1" }
+    return {
+      ...transform,
+      dropMetadata: url.searchParams.get("dm") === "1",
+      isHDR: url.searchParams.get("hdr") === "1",
+    }
   },
   async transform(inputBuffer, transform) {
     const injectedOptions =
